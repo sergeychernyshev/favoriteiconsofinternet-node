@@ -74,7 +74,7 @@ async function processAndDeduplicateFavicons() {
       }
 
       // The URL was valid for processing, so it should be valid here.
-      const domain = new URL(entry.url).hostname;
+      const domain = new URL(entry.url).hostname.replace(/^www\./, '');
       if (!seenDomains.has(domain)) {
         seenDomains.add(domain);
         uniqueEntriesMap.set(domain, entry);
@@ -104,7 +104,7 @@ async function processAndDeduplicateFavicons() {
 
         // Strip quotes
         const rankStr = parts[0].replace(/"/g, '');
-        const domain = parts[1].replace(/"/g, '');
+        const domain = parts[1].replace(/"/g, '').replace(/^www\./, '');
         
         if (domain === 'Domain') continue; // Skip header
 
