@@ -1,13 +1,13 @@
-import fs from "fs/promises";
-import { createReadStream } from "fs";
-import { createInterface } from "readline";
-import path from "path";
-import { URL } from "url";
+import fs from 'fs/promises';
+import { createReadStream } from 'fs';
+import { createInterface } from 'readline';
+import path from 'path';
+import { URL } from 'url';
 
 // --- Configuration ---
-const inputFile = path.join(process.cwd(), "favicons.json");
-const outputFile = path.join(process.cwd(), "favicons-processed.json");
-const rankedListFile = path.join(process.cwd(), "domain-lists", "top10milliondomains.csv");
+const inputFile = path.join(process.cwd(), 'favicons.json');
+const outputFile = path.join(process.cwd(), 'favicons-processed.json');
+const rankedListFile = path.join(process.cwd(), 'domain-lists', 'top10milliondomains.csv');
 // ---------------------
 
 /**
@@ -20,7 +20,7 @@ async function processAndDeduplicateFavicons() {
 
   try {
     // 1. Read and parse the input JSON file.
-    const rawData = await fs.readFile(inputFile, "utf-8");
+    const rawData = await fs.readFile(inputFile, 'utf-8');
     const entries = JSON.parse(rawData);
     console.log(`📊 Found ${entries.length} entries to process.`);
 
@@ -31,7 +31,7 @@ async function processAndDeduplicateFavicons() {
         return {
           ...entry,
           date: entry.date?.value || null, // Flatten date
-          error: "Missing url or favicon field",
+          error: 'Missing url or favicon field',
         };
       }
 
@@ -42,9 +42,7 @@ async function processAndDeduplicateFavicons() {
         const resolvedUrl = new URL(entry.favicon, entry.url);
         absoluteFaviconUrl = resolvedUrl.href;
       } catch (e) {
-        console.warn(
-          `⚠️  Could not parse URL for entry: ${entry.url}. Error: ${e.message}`
-        );
+        console.warn(`⚠️  Could not parse URL for entry: ${entry.url}. Error: ${e.message}`);
         return {
           ...entry,
           date: entry.date?.value,
@@ -60,10 +58,10 @@ async function processAndDeduplicateFavicons() {
       };
     });
 
-    console.log("✅ URL processing complete.");
+    console.log('✅ URL processing complete.');
 
     // 4. Deduplicate entries by domain, keeping the first one found.
-    console.log("🚀 Deduplicating entries by domain...");
+    console.log('🚀 Deduplicating entries by domain...');
     const seenDomains = new Set();
     const uniqueEntriesMap = new Map();
 
@@ -80,14 +78,12 @@ async function processAndDeduplicateFavicons() {
         uniqueEntriesMap.set(domain, entry);
       }
     }
-    
-    console.log(
-      `✅ Deduplication complete. Found ${uniqueEntriesMap.size} unique domains.`
-    );
+
+    console.log(`✅ Deduplication complete. Found ${uniqueEntriesMap.size} unique domains.`);
 
     // 5. Stream the ranked list and filter/update entries.
     console.log(`🚀 Mapping ranks from ${rankedListFile}...`);
-    
+
     const finalEntries = [];
     const fileStream = createReadStream(rankedListFile);
     const rl = createInterface({
@@ -97,23 +93,23 @@ async function processAndDeduplicateFavicons() {
 
     let processedLines = 0;
     for await (const line of rl) {
-        processedLines++;
-        // Parse line: "1","facebook.com","10.00"
-        const parts = line.split(',');
-        if (parts.length < 2) continue;
+      processedLines++;
+      // Parse line: "1","facebook.com","10.00"
+      const parts = line.split(',');
+      if (parts.length < 2) continue;
 
-        // Strip quotes
-        const rankStr = parts[0].replace(/"/g, '');
-        const domain = parts[1].replace(/"/g, '').replace(/^www\./, '');
-        
-        if (domain === 'Domain') continue; // Skip header
+      // Strip quotes
+      const rankStr = parts[0].replace(/"/g, '');
+      const domain = parts[1].replace(/"/g, '').replace(/^www\./, '');
 
-        if (uniqueEntriesMap.has(domain)) {
-            const entry = uniqueEntriesMap.get(domain);
-            entry.rank = parseInt(rankStr, 10);
-            finalEntries.push(entry);
-            uniqueEntriesMap.delete(domain); // Remove to avoid re-checking or just to track what's left
-        }
+      if (domain === 'Domain') continue; // Skip header
+
+      if (uniqueEntriesMap.has(domain)) {
+        const entry = uniqueEntriesMap.get(domain);
+        entry.rank = parseInt(rankStr, 10);
+        finalEntries.push(entry);
+        uniqueEntriesMap.delete(domain); // Remove to avoid re-checking or just to track what's left
+      }
     }
 
     console.log(`✅ Rank mapping complete. Kept ${finalEntries.length} entries.`);
@@ -124,12 +120,11 @@ async function processAndDeduplicateFavicons() {
     // 7. Save the processed and deduplicated data to a new file.
     await fs.writeFile(outputFile, JSON.stringify(finalEntries, null, 2));
     console.log(`💾 Processed data successfully saved to ${outputFile}`);
-
   } catch (error) {
-    console.error("❌ An error occurred during processing:", error.message);
-    if (error.code === "ENOENT") {
+    console.error('❌ An error occurred during processing:', error.message);
+    if (error.code === 'ENOENT') {
       console.error(
-        `\nHint: Make sure the input files exist. You may need to run 'npm start' first.`
+        `\nHint: Make sure the input files exist. You may need to run 'npm start' first.`,
       );
     }
     process.exit(1);

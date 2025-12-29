@@ -9,10 +9,10 @@ const CONFIG = {
   INPUT_FILE: 'favicons-processed.json',
   OUTPUT_FILE: 'favicons-downloaded.json',
   ICONS_DIR: 'icons',
-  MAX_REQUESTS: 100,
+  MAX_REQUESTS: 5000,
   USER_AGENT: 'Mozilla/5.0 (compatible; FaviconDownloader/1.0)',
   TIMEOUT_MS: 10000,
-  TARGET_SIZE: 32
+  TARGET_SIZE: 32,
 };
 
 async function ensureDir(dir) {
@@ -38,7 +38,7 @@ async function downloadFavicons() {
 
   // 1. Setup
   await ensureDir(CONFIG.ICONS_DIR);
-  
+
   const inputEntries = await loadJSON(CONFIG.INPUT_FILE);
   if (!inputEntries) {
     console.error(`❌ Input file ${CONFIG.INPUT_FILE} not found.`);
@@ -46,8 +46,8 @@ async function downloadFavicons() {
   }
 
   // Load previous state if available to get ETags/Last-Modified
-  const previousState = await loadJSON(CONFIG.OUTPUT_FILE) || [];
-  const stateMap = new Map(previousState.map(e => [e.url, e]));
+  const previousState = (await loadJSON(CONFIG.OUTPUT_FILE)) || [];
+  const stateMap = new Map(previousState.map((e) => [e.url, e]));
 
   // 2. Identify targets
   // We process the first N entries from the input list (which is ranked).
@@ -60,13 +60,13 @@ async function downloadFavicons() {
     const domain = new URL(entry.url).hostname.replace(/^www\./, '');
     const faviconUrl = entry.favicon;
     const prevEntry = stateMap.get(entry.url);
-    
+
     console.log(`
 Processing [Rank ${entry.rank}] ${domain}...`);
 
     // Prepare Headers
     const headers = {
-      'User-Agent': CONFIG.USER_AGENT
+      'User-Agent': CONFIG.USER_AGENT,
     };
 
     if (prevEntry) {
@@ -86,9 +86,9 @@ Processing [Rank ${entry.rank}] ${domain}...`);
       const response = await fetch(faviconUrl, {
         method: 'GET',
         headers: headers,
-        signal: controller.signal
+        signal: controller.signal,
       });
-      
+
       clearTimeout(timeoutId);
 
       metadata.lastCheckTime = new Date().toISOString();
@@ -99,17 +99,18 @@ Processing [Rank ${entry.rank}] ${domain}...`);
         status = 'not_modified';
       } else if (response.status === 200) {
         console.log(`  Make: 200 OK. Downloading...`);
-        
+
         const buffer = await response.arrayBuffer();
         const imageBuffer = Buffer.from(buffer);
 
         // Resize and Save
         const filename = `${domain}.png`;
         const outputPath = path.join(CONFIG.ICONS_DIR, filename);
-        
+
         // Determine if it's an ICO
-        const isIco = (metadata.contentType && metadata.contentType.includes('ico')) || 
-                      path.extname(new URL(faviconUrl).pathname).toLowerCase() === '.ico';
+        const isIco =
+          (metadata.contentType && metadata.contentType.includes('ico')) ||
+          path.extname(new URL(faviconUrl).pathname).toLowerCase() === '.ico';
 
         let sharpInstance;
 
@@ -117,25 +118,29 @@ Processing [Rank ${entry.rank}] ${domain}...`);
           try {
             // sharpsFromIco returns an array of sharp instances (one for each size in the ICO)
             const icons = await sharpsFromIco(imageBuffer);
-            
+
             if (icons.length > 0) {
               // Find the best icon: preferably >= 32x32.
               // We need to inspect metadata of each to know size.
-              // Since we can't await inside sort effectively without resolving first, 
+              // Since we can't await inside sort effectively without resolving first,
               // let's just get metadata for all.
-              const iconsWithMeta = await Promise.all(icons.map(async (icon) => {
-                const meta = await icon.metadata();
-                return { icon, width: meta.width, height: meta.height };
-              }));
+              const iconsWithMeta = await Promise.all(
+                icons.map(async (icon) => {
+                  const meta = await icon.metadata();
+                  return { icon, width: meta.width, height: meta.height };
+                }),
+              );
 
               // Sort by width descending to get the largest one
               iconsWithMeta.sort((a, b) => b.width - a.width);
-              
+
               // Or find closest to 32? Let's just take the largest and resize down for best quality.
               sharpInstance = iconsWithMeta[0].icon;
             }
           } catch (icoError) {
-             console.warn(`  Warning: Failed to parse ICO, falling back to standard sharp: ${icoError.message}`);
+            console.warn(
+              `  Warning: Failed to parse ICO, falling back to standard sharp: ${icoError.message}`,
+            );
           }
         }
 
@@ -143,12 +148,9 @@ Processing [Rank ${entry.rank}] ${domain}...`);
         if (!sharpInstance) {
           sharpInstance = sharp(imageBuffer);
         }
-        
-        await sharpInstance
-          .resize(CONFIG.TARGET_SIZE, CONFIG.TARGET_SIZE)
-          .png()
-          .toFile(outputPath);
-        
+
+        await sharpInstance.resize(CONFIG.TARGET_SIZE, CONFIG.TARGET_SIZE).png().toFile(outputPath);
+
         console.log(`  Saved to ${outputPath}`);
 
         // Update Metadata
@@ -164,7 +166,6 @@ Processing [Rank ${entry.rank}] ${domain}...`);
         status = 'failed';
         error = `HTTP ${response.status}`;
       }
-
     } catch (e) {
       console.error(`  Error: ${e.message}`);
       status = 'error';
@@ -175,7 +176,7 @@ Processing [Rank ${entry.rank}] ${domain}...`);
     results.push({
       ...metadata,
       status,
-      error
+      error,
     });
   }
 
@@ -183,23 +184,23 @@ Processing [Rank ${entry.rank}] ${domain}...`);
   // We merge the new results into the previous state map (updating old entries, adding new ones)
   // But wait, if we only processed 100, we shouldn't lose the other 100k+ entries if we overwrite the file.
   // However, the prompt says "takes processed.json as input... save metadata".
-  // If we want to maintain a full state file, we should probably start with the full input list 
+  // If we want to maintain a full state file, we should probably start with the full input list
   // and overlay our current results.
-  
-  // Strategy: 
-  // Take ALL input entries. 
+
+  // Strategy:
+  // Take ALL input entries.
   // For the ones we processed, use the NEW result.
   // For the ones we didn't, use the PREVIOUS state if it exists, or just the input entry.
-  
-  const finalOutput = inputEntries.map(entry => {
+
+  const finalOutput = inputEntries.map((entry) => {
     // Is this entry in our current batch results?
-    const newResult = results.find(r => r.url === entry.url);
+    const newResult = results.find((r) => r.url === entry.url);
     if (newResult) return newResult;
-    
+
     // If not, do we have old state?
     const oldState = stateMap.get(entry.url);
     if (oldState) return oldState;
-    
+
     // Otherwise just the original entry
     return entry;
   });

@@ -1,0 +1,5 @@
+node_modules
+icons
+*.json
+dist
+build
