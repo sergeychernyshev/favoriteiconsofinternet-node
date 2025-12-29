@@ -148,6 +148,28 @@ async function generateTiles() {
 
   console.log(`🧩 Creating ${chunks.length} tiles...`);
 
+  // Find the last existing tile to force its regeneration
+  let lastExistingTileIndex = 0;
+  try {
+    const files = await fs.readdir(CONFIG.TILES_DIR);
+    const tileFiles = files.filter((f) => f.startsWith('tile_') && f.endsWith('.webp'));
+    const indices = tileFiles
+      .map((f) => {
+        const match = f.match(/tile_(\d+)\.webp/);
+        return match ? parseInt(match[1]) : null;
+      })
+      .filter((n) => n !== null && !isNaN(n));
+    if (indices.length > 0) {
+      lastExistingTileIndex = Math.max(...indices);
+    }
+  } catch (e) {
+    // Directory might not exist yet
+  }
+
+  if (lastExistingTileIndex > 0) {
+    console.log(`🔍 Last existing tile index found: ${lastExistingTileIndex}. It will be forced to regenerate.`);
+  }
+
   const cellSize = CONFIG.ICON_SIZE + CONFIG.BORDER_SIZE * 2; // 32 + 2 + 2 = 36
   const imageSize = cellSize * CONFIG.GRID_SIZE; // 36 * 10 = 360
 
@@ -215,39 +237,44 @@ async function generateTiles() {
       let shouldGenerate = CONFIG.FORCE_REGEN;
 
       if (!shouldGenerate) {
-        try {
-          const tileStats = await fs.stat(tilePath);
-          const tileMtime = tileStats.mtimeMs;
+        if (tileIndex === lastExistingTileIndex) {
+          console.log(`  🔄 Forcing regeneration of the last existing tile #${tileIndex}...`);
+          shouldGenerate = true;
+        } else {
+          try {
+            const tileStats = await fs.stat(tilePath);
+            const tileMtime = tileStats.mtimeMs;
 
-          // Check if any icon in this chunk is newer than the tile
-          let isStale = false;
-          for (const entry of chunk) {
-            try {
-              const iconStats = await fs.stat(entry.localPath);
-              if (iconStats.mtimeMs > tileMtime) {
+            // Check if any icon in this chunk is newer than the tile
+            let isStale = false;
+            for (const entry of chunk) {
+              try {
+                const iconStats = await fs.stat(entry.localPath);
+                if (iconStats.mtimeMs > tileMtime) {
+                  isStale = true;
+                  break;
+                }
+              } catch (e) {
+                // If icon file is missing (shouldn't happen given filter), force regen
                 isStale = true;
                 break;
               }
-            } catch (e) {
-              // If icon file is missing (shouldn't happen given filter), force regen
-              isStale = true;
-              break;
             }
-          }
 
-          if (isStale) {
-            console.log(`  🔄 Tile #${tileIndex} is stale. Regenerating...`);
+            if (isStale) {
+              console.log(`  🔄 Tile #${tileIndex} is stale. Regenerating...`);
+              shouldGenerate = true;
+            } else {
+              console.log(`  ⏭️  Tile #${tileIndex} is up to date. Skipping generation.`);
+            }
+          } catch (e) {
+            // Tile doesn't exist
+            console.log(`  ✨ Tile #${tileIndex} is missing. Generating...`);
             shouldGenerate = true;
-          } else {
-            console.log(`  ⏭️  Tile #${tileIndex} is up to date. Skipping generation.`);
           }
-        } catch (e) {
-          // Tile doesn't exist
-          console.log(`  ✨ Tile #${tileIndex} is missing. Generating...`);
-          shouldGenerate = true;
         }
       } else {
-         console.log(`  🔄 Force regenerating Tile #${tileIndex}...`);
+        console.log(`  🔄 Force regenerating Tile #${tileIndex}...`);
       }
 
       if (shouldGenerate) {
