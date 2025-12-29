@@ -27,7 +27,7 @@ async function ensureDir(dir) {
 }
 
 async function generateOgImage(entries, cellSize) {
-  const ogImagePath = path.join(CONFIG.TILES_DIR, 'og_image.jpg');
+  const ogImagePath = path.join(CONFIG.TILES_DIR, 'og_image.webp');
   console.log('\n🎨 Generating Open Graph Image...');
   const width = 1200;
   const height = 630;
@@ -108,9 +108,9 @@ async function generateOgImage(entries, cellSize) {
     },
   })
     .composite(composites)
-    .jpeg() // Change to jpeg
+    .webp() // Change to webp
     .toFile(ogImagePath);
-  console.log('✅ Saved OG Image: dist/og_image.jpg');
+  console.log('✅ Saved OG Image: dist/og_image.webp');
 }
 
 async function generateTiles() {
@@ -329,7 +329,7 @@ async function generateTiles() {
     <meta property="og:url" content="https://favoriteiconsofinternet.com" />
     <meta property="og:description" content="Favorite icons map of internet" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://${CONFIG.HOSTNAME}/og_image.jpg" />
+    <meta property="og:image" content="https://${CONFIG.HOSTNAME}/og_image.webp" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <base target="_blank" />
