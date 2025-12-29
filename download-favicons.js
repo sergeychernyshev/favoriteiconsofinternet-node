@@ -9,7 +9,8 @@ const CONFIG = {
   INPUT_FILE: 'favicons-processed.json',
   OUTPUT_FILE: 'favicons-downloaded.json',
   ICONS_DIR: 'icons',
-  MAX_REQUESTS: 10000,
+  MAX_REQUESTS: 50000,
+  SAVE_BATCH_SIZE: 25,
   USER_AGENT: 'Mozilla/5.0 (compatible; FaviconDownloader/1.0)',
   TIMEOUT_MS: 10000,
   TARGET_SIZE: 32,
@@ -32,6 +33,28 @@ async function loadJSON(filePath) {
     if (error.code === 'ENOENT') return null;
     throw error;
   }
+}
+
+async function saveProgress(inputEntries, results, stateMap, outputFile) {
+  const resultMap = new Map(results.map((r) => [r.url, r]));
+
+  const finalOutput = inputEntries.map((entry) => {
+    // Is this entry in our current batch results?
+    const newResult = resultMap.get(entry.url);
+    if (newResult) return newResult;
+
+    // If not, do we have old state?
+    const oldState = stateMap.get(entry.url);
+    if (oldState) return oldState;
+
+    // Otherwise just the original entry
+    return entry;
+  });
+
+  await fs.writeFile(outputFile, JSON.stringify(finalOutput, null, 2));
+  console.log(
+    `\n💾 Checkpoint: Saved ${finalOutput.length} entries (processed ${results.length}) to ${outputFile}`,
+  );
 }
 
 async function downloadFavicons() {
@@ -88,6 +111,10 @@ Processing [Rank ${entry.rank}] ${domain}...`);
             ...prevEntry,
             status: 'skipped_recent',
           });
+
+          if (results.length % CONFIG.SAVE_BATCH_SIZE === 0) {
+            await saveProgress(inputEntries, results, stateMap, CONFIG.OUTPUT_FILE);
+          }
           continue;
         }
       }
@@ -197,36 +224,14 @@ Processing [Rank ${entry.rank}] ${domain}...`);
       status,
       error,
     });
+
+    if (results.length % CONFIG.SAVE_BATCH_SIZE === 0) {
+      await saveProgress(inputEntries, results, stateMap, CONFIG.OUTPUT_FILE);
+    }
   }
 
   // 3. Save Results
-  // We merge the new results into the previous state map (updating old entries, adding new ones)
-  // But wait, if we only processed 100, we shouldn't lose the other 100k+ entries if we overwrite the file.
-  // However, the prompt says "takes processed.json as input... save metadata".
-  // If we want to maintain a full state file, we should probably start with the full input list
-  // and overlay our current results.
-
-  // Strategy:
-  // Take ALL input entries.
-  // For the ones we processed, use the NEW result.
-  // For the ones we didn't, use the PREVIOUS state if it exists, or just the input entry.
-
-  const finalOutput = inputEntries.map((entry) => {
-    // Is this entry in our current batch results?
-    const newResult = results.find((r) => r.url === entry.url);
-    if (newResult) return newResult;
-
-    // If not, do we have old state?
-    const oldState = stateMap.get(entry.url);
-    if (oldState) return oldState;
-
-    // Otherwise just the original entry
-    return entry;
-  });
-
-  await fs.writeFile(CONFIG.OUTPUT_FILE, JSON.stringify(finalOutput, null, 2));
-  console.log(`
-💾 Saved ${finalOutput.length} entries (processed ${results.length}) to ${CONFIG.OUTPUT_FILE}`);
+  await saveProgress(inputEntries, results, stateMap, CONFIG.OUTPUT_FILE);
 }
 
 downloadFavicons();
