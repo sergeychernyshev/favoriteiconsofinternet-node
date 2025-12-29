@@ -7,11 +7,11 @@ const CONFIG = {
   INPUT_FILE: 'favicons-downloaded.json',
   OUTPUT_FILE: 'favicons-tiled.json',
   TILES_DIR: 'dist',
-  GRID_SIZE: 10,
+  GRID_SIZE: 20,
   ICON_SIZE: 16,
   BORDER_SIZE: 1,
   BACKGROUND_COLOR: { r: 255, g: 255, b: 255, alpha: 1 },
-  EAGER_LOAD_TILES: 32,
+  EAGER_LOAD_TILES: 8,
   TILES_PER_MAP_GROUP: 16,
   HOSTNAME: 'favoriteiconsofinternet.com',
   FORCE_REGEN: process.argv.includes('--force'),
@@ -167,7 +167,9 @@ async function generateTiles() {
   }
 
   if (lastExistingTileIndex > 0) {
-    console.log(`🔍 Last existing tile index found: ${lastExistingTileIndex}. It will be forced to regenerate.`);
+    console.log(
+      `🔍 Last existing tile index found: ${lastExistingTileIndex}. It will be forced to regenerate.`,
+    );
   }
 
   const cellSize = CONFIG.ICON_SIZE + CONFIG.BORDER_SIZE * 2; // 32 + 2 + 2 = 36
