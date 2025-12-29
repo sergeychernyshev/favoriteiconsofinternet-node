@@ -5,12 +5,19 @@
   "main": "download-favicons.js",
   "type": "module",
   "scripts": {
-    "start": "node download-favicons.js",
-    "process": "node process-favicons.js"
+    "download:icons": "node download-favicons.js",
+    "download:data": "node download-favicons-data.js",
+    "process": "node process-favicons.js",
+    "format": "prettier --write ."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/bigquery": "^7.7.1"
+    "@google-cloud/bigquery": "^7.7.1",
+    "sharp": "^0.34.5",
+    "sharp-ico": "^0.1.5"
+  },
+  "devDependencies": {
+    "prettier": "^3.7.4"
   }
 }
