@@ -48,7 +48,8 @@ async function generateOgImage(entries, cellSize) {
     try {
       const resized = await sharp(entry.localPath)
         .resize(CONFIG.ICON_SIZE, CONFIG.ICON_SIZE)
-        .png()
+        .png() // Convert to PNG first to ensure transparency is handled well before resizing/compositing if needed, but standard sharp pipeline handles this. Keeping png() as intermediate is fine, but output must be webp.
+        // Actually, we can just resize and toBuffer. Sharp handles formats.
         .toBuffer();
 
       composites.push({ input: resized, top, left });
@@ -66,9 +67,9 @@ async function generateOgImage(entries, cellSize) {
     },
   })
     .composite(composites)
-    .png()
-    .toFile(path.join(CONFIG.TILES_DIR, 'og_image.png'));
-  console.log('✅ Saved OG Image: tiles/og_image.png');
+    .jpeg() // Change to jpeg
+    .toFile(path.join(CONFIG.TILES_DIR, 'og_image.jpg'));
+  console.log('✅ Saved OG Image: dist/og_image.jpg');
 }
 
 async function generateTiles() {
@@ -87,7 +88,10 @@ async function generateTiles() {
   // and we want them sorted by rank.
   const validEntries = entries
     .filter(
-      (e) => (e.status === 'downloaded' || e.status === 'not_modified') && e.localPath && e.rank, // Ensure rank exists
+      (e) =>
+        (e.status === 'downloaded' || e.status === 'not_modified' || e.status === 'skipped_recent') &&
+        e.localPath &&
+        e.rank, // Ensure rank exists
     )
     .sort((a, b) => a.rank - b.rank);
 
@@ -115,7 +119,7 @@ async function generateTiles() {
   for (let i = 0; i < chunks.length; i++) {
     const chunk = chunks[i];
     const tileIndex = i + 1;
-    const tileFilename = `tile_${tileIndex}.png`;
+    const tileFilename = `tile_${tileIndex}.webp`; // Changed to .webp
     const tilePath = path.join(CONFIG.TILES_DIR, tileFilename);
 
     console.log(`\n🎨 Generating Tile #${tileIndex} (${chunk.length} icons)...`);
@@ -175,7 +179,7 @@ async function generateTiles() {
         },
       })
         .composite(composites)
-        .png()
+        .webp() // Changed to .webp()
         .toFile(tilePath);
       console.log(`  ✅ Saved Image: ${tilePath}`);
     } catch (err) {
@@ -210,7 +214,7 @@ async function generateTiles() {
     <title>Favorite Icons of Internet</title>
     <meta property="og:title" content="Favorite Icons of Internet" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://${CONFIG.HOSTNAME}/og_image.png" />
+    <meta property="og:image" content="https://${CONFIG.HOSTNAME}/og_image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <base target="_blank" />

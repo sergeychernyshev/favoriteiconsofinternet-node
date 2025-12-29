@@ -13,6 +13,7 @@ const CONFIG = {
   USER_AGENT: 'Mozilla/5.0 (compatible; FaviconDownloader/1.0)',
   TIMEOUT_MS: 10000,
   TARGET_SIZE: 32,
+  SKIP_DOWNLOAD_PERIOD_MS: 24 * 60 * 60 * 1000,
 };
 
 async function ensureDir(dir) {
@@ -72,6 +73,24 @@ Processing [Rank ${entry.rank}] ${domain}...`);
     if (prevEntry) {
       if (prevEntry.etag) headers['If-None-Match'] = prevEntry.etag;
       if (prevEntry.lastModified) headers['If-Modified-Since'] = prevEntry.lastModified;
+
+      // Check if we checked this recently (within config period)
+      if (prevEntry.lastCheckTime) {
+        const lastCheck = new Date(prevEntry.lastCheckTime).getTime();
+        const now = Date.now();
+        const skipPeriod = CONFIG.SKIP_DOWNLOAD_PERIOD_MS;
+
+        if (now - lastCheck < skipPeriod) {
+          console.log(
+            `  Skipping: checked within last ${(skipPeriod / 3600000).toFixed(1)}h (${prevEntry.lastCheckTime})`,
+          );
+          results.push({
+            ...prevEntry,
+            status: 'skipped_recent',
+          });
+          continue;
+        }
+      }
     }
 
     const startTime = Date.now();
