@@ -193,9 +193,12 @@ async function generateTiles() {
 
     const composites = [];
     const htmlAreas = [];
+    const domains = [];
 
     for (let j = 0; j < chunk.length; j++) {
       const entry = chunk[j];
+      const domain = new URL(entry.url).hostname.replace(/^www\./, '');
+      domains.push(domain);
 
       // Calculate position
       const col = j % CONFIG.GRID_SIZE;
@@ -235,7 +238,7 @@ async function generateTiles() {
       };
     }
 
-    // Generate Image
+    // Generate Image and JSON
     try {
       let shouldGenerate = CONFIG.FORCE_REGEN;
 
@@ -278,6 +281,29 @@ async function generateTiles() {
         }
       } else {
         console.log(`  🔄 Force regenerating Tile #${tileIndex}...`);
+      }
+
+      // Check if JSON exists, if not, force generation of at least JSON
+      const domainsJsonFilename = `tile_${tileIndex}.json`;
+      const domainsJsonPath = path.join(CONFIG.TILES_DIR, domainsJsonFilename);
+      let shouldGenerateJson = shouldGenerate;
+
+      if (!shouldGenerateJson) {
+        try {
+          await fs.access(domainsJsonPath);
+        } catch {
+          console.log(`  ✨ JSON for Tile #${tileIndex} is missing. Generating...`);
+          shouldGenerateJson = true;
+        }
+      }
+
+      if (shouldGenerateJson) {
+        try {
+          await fs.writeFile(domainsJsonPath, JSON.stringify(domains, null, 2));
+          console.log(`  ✅ Saved Domains JSON: ${domainsJsonPath}`);
+        } catch (err) {
+          console.error(`  ❌ Error saving domains JSON for tile ${tileIndex}: ${err.message}`);
+        }
       }
 
       if (shouldGenerate) {
