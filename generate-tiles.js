@@ -426,6 +426,15 @@ async function generateTiles() {
   await fs.writeFile(indexHtmlPath, finalHtmlContent);
   console.log(`✅ Saved Combined Index HTML: ${indexHtmlPath}`);
 
+  // Generate Cloudflare _headers file
+  let headersContent = '/\n';
+  for (let i = 1; i <= Math.min(chunks.length, CONFIG.HIGH_PRIORITY_TILES); i++) {
+    headersContent += `  Link: </tile_${i}.avif>; rel=preload; as=image\n`;
+  }
+  const headersPath = path.join(CONFIG.TILES_DIR, '_headers');
+  await fs.writeFile(headersPath, headersContent);
+  console.log(`✅ Saved Cloudflare Headers: ${headersPath}`);
+
   // 7. Update Metadata
   // We need to merge these updates back into the full list.
   // Since we filtered `entries` to get `validEntries` and modified objects inside `validEntries`,
