@@ -359,14 +359,22 @@ async function generateTiles() {
     <meta property="og:image:height" content="630" />
     <base target="_blank" />
     <meta name="color-scheme" content="light dark">
-    <style>        body { margin: 0; padding: 0; background-color: Field; }
-        .tiles-wrapper { 
-            font-size: 0; 
-            line-height: 0; 
-            display: inline-block; 
-            width: round(up, 100vw, ${imageSize}px);
-        }
-        img { border: 0; display: inline-block; margin: 0; padding: 0; vertical-align: top; }
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: Field;
+      }
+      .tiles-wrapper {
+          font-size: 0;
+          line-height: 0;
+          display: inline-block;
+          width: round(up, 100vw, ${imageSize}px);
+      }
+      img { border: 0; display: inline-block; margin: 0; padding: 0; vertical-align: top; }
     </style>
     <script>
       function loadMap(img) {
