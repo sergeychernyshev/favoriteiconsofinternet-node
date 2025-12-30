@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>Favorite Icons of Internet</title>
@@ -10,35 +10,25 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <base target="_blank" />
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        background: white;
-      }
-      .tiles-wrapper {
-        font-size: 0;
-        line-height: 0;
-        display: inline-block;
-        width: round(up, 100vw, 360px);
-      }
-      img {
-        border: 0;
-        display: inline-block;
-        margin: 0;
-        padding: 0;
-        vertical-align: top;
-      }
+    <meta name="color-scheme" content="light dark">
+    <style>        body { margin: 0; padding: 0; background-color: Field; }
+        .tiles-wrapper { 
+            font-size: 0; 
+            line-height: 0; 
+            display: inline-block; 
+            width: round(up, 100vw, 360px);
+        }
+        img { border: 0; display: inline-block; margin: 0; padding: 0; vertical-align: top; }
     </style>
     <script>
       function loadMap(img) {
         if (img.dataset.mapLoaded) return;
-        img.dataset.mapLoaded = 'true';
+        img.dataset.mapLoaded = "true";
 
         const CONFIG = {
           GRID_SIZE: 10,
           ICON_SIZE: 32,
-          BORDER_SIZE: 2,
+          BORDER_SIZE: 2
         };
 
         const src = img.getAttribute('src');
@@ -47,8 +37,8 @@
         const tileIndex = match[1];
 
         fetch(`tile_${tileIndex}.json`)
-          .then((res) => res.json())
-          .then((domains) => {
+          .then(res => res.json())
+          .then(domains => {
             const mapName = `map_${tileIndex}`;
             const map = document.createElement('map');
             map.name = mapName;
@@ -69,3621 +59,472 @@
               map.appendChild(area);
             });
 
-            img.parentNode.appendChild(map);
+            img.after(map);
           })
-          .catch((err) => {
+          .catch(err => {
             console.error('Failed to load map for ' + src, err);
             delete img.dataset.mapLoaded;
           });
       }
     </script>
-  </head>
-  <body>
+</head>
+<body>
     <div class="tiles-wrapper">
-      <img
-        src="tile_1.avif"
-        usemap="#map_1"
-        width="360"
-        height="360"
-        fetchpriority="high"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_2.avif"
-        usemap="#map_2"
-        width="360"
-        height="360"
-        fetchpriority="high"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_3.avif"
-        usemap="#map_3"
-        width="360"
-        height="360"
-        fetchpriority="high"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_4.avif"
-        usemap="#map_4"
-        width="360"
-        height="360"
-        fetchpriority="high"
-        onload="loadMap(this)"
-      />
-      <img src="tile_5.avif" usemap="#map_5" width="360" height="360" onload="loadMap(this)" />
-      <img src="tile_6.avif" usemap="#map_6" width="360" height="360" onload="loadMap(this)" />
-      <img src="tile_7.avif" usemap="#map_7" width="360" height="360" onload="loadMap(this)" />
-      <img src="tile_8.avif" usemap="#map_8" width="360" height="360" onload="loadMap(this)" />
-      <img
-        src="tile_9.avif"
-        usemap="#map_9"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_10.avif"
-        usemap="#map_10"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_11.avif"
-        usemap="#map_11"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_12.avif"
-        usemap="#map_12"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_13.avif"
-        usemap="#map_13"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_14.avif"
-        usemap="#map_14"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_15.avif"
-        usemap="#map_15"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_16.avif"
-        usemap="#map_16"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_17.avif"
-        usemap="#map_17"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_18.avif"
-        usemap="#map_18"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_19.avif"
-        usemap="#map_19"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_20.avif"
-        usemap="#map_20"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_21.avif"
-        usemap="#map_21"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_22.avif"
-        usemap="#map_22"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_23.avif"
-        usemap="#map_23"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_24.avif"
-        usemap="#map_24"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_25.avif"
-        usemap="#map_25"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_26.avif"
-        usemap="#map_26"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_27.avif"
-        usemap="#map_27"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_28.avif"
-        usemap="#map_28"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_29.avif"
-        usemap="#map_29"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_30.avif"
-        usemap="#map_30"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_31.avif"
-        usemap="#map_31"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_32.avif"
-        usemap="#map_32"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_33.avif"
-        usemap="#map_33"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_34.avif"
-        usemap="#map_34"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_35.avif"
-        usemap="#map_35"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_36.avif"
-        usemap="#map_36"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_37.avif"
-        usemap="#map_37"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_38.avif"
-        usemap="#map_38"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_39.avif"
-        usemap="#map_39"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_40.avif"
-        usemap="#map_40"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_41.avif"
-        usemap="#map_41"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_42.avif"
-        usemap="#map_42"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_43.avif"
-        usemap="#map_43"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_44.avif"
-        usemap="#map_44"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_45.avif"
-        usemap="#map_45"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_46.avif"
-        usemap="#map_46"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_47.avif"
-        usemap="#map_47"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_48.avif"
-        usemap="#map_48"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_49.avif"
-        usemap="#map_49"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_50.avif"
-        usemap="#map_50"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_51.avif"
-        usemap="#map_51"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_52.avif"
-        usemap="#map_52"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_53.avif"
-        usemap="#map_53"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_54.avif"
-        usemap="#map_54"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_55.avif"
-        usemap="#map_55"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_56.avif"
-        usemap="#map_56"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_57.avif"
-        usemap="#map_57"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_58.avif"
-        usemap="#map_58"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_59.avif"
-        usemap="#map_59"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_60.avif"
-        usemap="#map_60"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_61.avif"
-        usemap="#map_61"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_62.avif"
-        usemap="#map_62"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_63.avif"
-        usemap="#map_63"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_64.avif"
-        usemap="#map_64"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_65.avif"
-        usemap="#map_65"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_66.avif"
-        usemap="#map_66"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_67.avif"
-        usemap="#map_67"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_68.avif"
-        usemap="#map_68"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_69.avif"
-        usemap="#map_69"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_70.avif"
-        usemap="#map_70"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_71.avif"
-        usemap="#map_71"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_72.avif"
-        usemap="#map_72"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_73.avif"
-        usemap="#map_73"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_74.avif"
-        usemap="#map_74"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_75.avif"
-        usemap="#map_75"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_76.avif"
-        usemap="#map_76"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_77.avif"
-        usemap="#map_77"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_78.avif"
-        usemap="#map_78"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_79.avif"
-        usemap="#map_79"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_80.avif"
-        usemap="#map_80"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_81.avif"
-        usemap="#map_81"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_82.avif"
-        usemap="#map_82"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_83.avif"
-        usemap="#map_83"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_84.avif"
-        usemap="#map_84"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_85.avif"
-        usemap="#map_85"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_86.avif"
-        usemap="#map_86"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_87.avif"
-        usemap="#map_87"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_88.avif"
-        usemap="#map_88"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_89.avif"
-        usemap="#map_89"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_90.avif"
-        usemap="#map_90"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_91.avif"
-        usemap="#map_91"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_92.avif"
-        usemap="#map_92"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_93.avif"
-        usemap="#map_93"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_94.avif"
-        usemap="#map_94"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_95.avif"
-        usemap="#map_95"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_96.avif"
-        usemap="#map_96"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_97.avif"
-        usemap="#map_97"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_98.avif"
-        usemap="#map_98"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_99.avif"
-        usemap="#map_99"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_100.avif"
-        usemap="#map_100"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_101.avif"
-        usemap="#map_101"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_102.avif"
-        usemap="#map_102"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_103.avif"
-        usemap="#map_103"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_104.avif"
-        usemap="#map_104"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_105.avif"
-        usemap="#map_105"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_106.avif"
-        usemap="#map_106"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_107.avif"
-        usemap="#map_107"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_108.avif"
-        usemap="#map_108"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_109.avif"
-        usemap="#map_109"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_110.avif"
-        usemap="#map_110"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_111.avif"
-        usemap="#map_111"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_112.avif"
-        usemap="#map_112"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_113.avif"
-        usemap="#map_113"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_114.avif"
-        usemap="#map_114"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_115.avif"
-        usemap="#map_115"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_116.avif"
-        usemap="#map_116"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_117.avif"
-        usemap="#map_117"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_118.avif"
-        usemap="#map_118"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_119.avif"
-        usemap="#map_119"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_120.avif"
-        usemap="#map_120"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_121.avif"
-        usemap="#map_121"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_122.avif"
-        usemap="#map_122"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_123.avif"
-        usemap="#map_123"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_124.avif"
-        usemap="#map_124"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_125.avif"
-        usemap="#map_125"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_126.avif"
-        usemap="#map_126"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_127.avif"
-        usemap="#map_127"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_128.avif"
-        usemap="#map_128"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_129.avif"
-        usemap="#map_129"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_130.avif"
-        usemap="#map_130"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_131.avif"
-        usemap="#map_131"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_132.avif"
-        usemap="#map_132"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_133.avif"
-        usemap="#map_133"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_134.avif"
-        usemap="#map_134"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_135.avif"
-        usemap="#map_135"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_136.avif"
-        usemap="#map_136"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_137.avif"
-        usemap="#map_137"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_138.avif"
-        usemap="#map_138"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_139.avif"
-        usemap="#map_139"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_140.avif"
-        usemap="#map_140"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_141.avif"
-        usemap="#map_141"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_142.avif"
-        usemap="#map_142"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_143.avif"
-        usemap="#map_143"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_144.avif"
-        usemap="#map_144"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_145.avif"
-        usemap="#map_145"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_146.avif"
-        usemap="#map_146"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_147.avif"
-        usemap="#map_147"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_148.avif"
-        usemap="#map_148"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_149.avif"
-        usemap="#map_149"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_150.avif"
-        usemap="#map_150"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_151.avif"
-        usemap="#map_151"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_152.avif"
-        usemap="#map_152"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_153.avif"
-        usemap="#map_153"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_154.avif"
-        usemap="#map_154"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_155.avif"
-        usemap="#map_155"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_156.avif"
-        usemap="#map_156"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_157.avif"
-        usemap="#map_157"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_158.avif"
-        usemap="#map_158"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_159.avif"
-        usemap="#map_159"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_160.avif"
-        usemap="#map_160"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_161.avif"
-        usemap="#map_161"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_162.avif"
-        usemap="#map_162"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_163.avif"
-        usemap="#map_163"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_164.avif"
-        usemap="#map_164"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_165.avif"
-        usemap="#map_165"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_166.avif"
-        usemap="#map_166"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_167.avif"
-        usemap="#map_167"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_168.avif"
-        usemap="#map_168"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_169.avif"
-        usemap="#map_169"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_170.avif"
-        usemap="#map_170"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_171.avif"
-        usemap="#map_171"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_172.avif"
-        usemap="#map_172"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_173.avif"
-        usemap="#map_173"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_174.avif"
-        usemap="#map_174"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_175.avif"
-        usemap="#map_175"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_176.avif"
-        usemap="#map_176"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_177.avif"
-        usemap="#map_177"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_178.avif"
-        usemap="#map_178"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_179.avif"
-        usemap="#map_179"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_180.avif"
-        usemap="#map_180"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_181.avif"
-        usemap="#map_181"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_182.avif"
-        usemap="#map_182"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_183.avif"
-        usemap="#map_183"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_184.avif"
-        usemap="#map_184"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_185.avif"
-        usemap="#map_185"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_186.avif"
-        usemap="#map_186"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_187.avif"
-        usemap="#map_187"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_188.avif"
-        usemap="#map_188"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_189.avif"
-        usemap="#map_189"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_190.avif"
-        usemap="#map_190"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_191.avif"
-        usemap="#map_191"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_192.avif"
-        usemap="#map_192"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_193.avif"
-        usemap="#map_193"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_194.avif"
-        usemap="#map_194"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_195.avif"
-        usemap="#map_195"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_196.avif"
-        usemap="#map_196"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_197.avif"
-        usemap="#map_197"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_198.avif"
-        usemap="#map_198"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_199.avif"
-        usemap="#map_199"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_200.avif"
-        usemap="#map_200"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_201.avif"
-        usemap="#map_201"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_202.avif"
-        usemap="#map_202"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_203.avif"
-        usemap="#map_203"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_204.avif"
-        usemap="#map_204"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_205.avif"
-        usemap="#map_205"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_206.avif"
-        usemap="#map_206"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_207.avif"
-        usemap="#map_207"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_208.avif"
-        usemap="#map_208"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_209.avif"
-        usemap="#map_209"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_210.avif"
-        usemap="#map_210"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_211.avif"
-        usemap="#map_211"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_212.avif"
-        usemap="#map_212"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_213.avif"
-        usemap="#map_213"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_214.avif"
-        usemap="#map_214"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_215.avif"
-        usemap="#map_215"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_216.avif"
-        usemap="#map_216"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_217.avif"
-        usemap="#map_217"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_218.avif"
-        usemap="#map_218"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_219.avif"
-        usemap="#map_219"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_220.avif"
-        usemap="#map_220"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_221.avif"
-        usemap="#map_221"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_222.avif"
-        usemap="#map_222"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_223.avif"
-        usemap="#map_223"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_224.avif"
-        usemap="#map_224"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_225.avif"
-        usemap="#map_225"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_226.avif"
-        usemap="#map_226"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_227.avif"
-        usemap="#map_227"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_228.avif"
-        usemap="#map_228"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_229.avif"
-        usemap="#map_229"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_230.avif"
-        usemap="#map_230"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_231.avif"
-        usemap="#map_231"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_232.avif"
-        usemap="#map_232"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_233.avif"
-        usemap="#map_233"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_234.avif"
-        usemap="#map_234"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_235.avif"
-        usemap="#map_235"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_236.avif"
-        usemap="#map_236"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_237.avif"
-        usemap="#map_237"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_238.avif"
-        usemap="#map_238"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_239.avif"
-        usemap="#map_239"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_240.avif"
-        usemap="#map_240"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_241.avif"
-        usemap="#map_241"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_242.avif"
-        usemap="#map_242"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_243.avif"
-        usemap="#map_243"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_244.avif"
-        usemap="#map_244"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_245.avif"
-        usemap="#map_245"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_246.avif"
-        usemap="#map_246"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_247.avif"
-        usemap="#map_247"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_248.avif"
-        usemap="#map_248"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_249.avif"
-        usemap="#map_249"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_250.avif"
-        usemap="#map_250"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_251.avif"
-        usemap="#map_251"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_252.avif"
-        usemap="#map_252"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_253.avif"
-        usemap="#map_253"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_254.avif"
-        usemap="#map_254"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_255.avif"
-        usemap="#map_255"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_256.avif"
-        usemap="#map_256"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_257.avif"
-        usemap="#map_257"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_258.avif"
-        usemap="#map_258"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_259.avif"
-        usemap="#map_259"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_260.avif"
-        usemap="#map_260"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_261.avif"
-        usemap="#map_261"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_262.avif"
-        usemap="#map_262"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_263.avif"
-        usemap="#map_263"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_264.avif"
-        usemap="#map_264"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_265.avif"
-        usemap="#map_265"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_266.avif"
-        usemap="#map_266"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_267.avif"
-        usemap="#map_267"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_268.avif"
-        usemap="#map_268"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_269.avif"
-        usemap="#map_269"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_270.avif"
-        usemap="#map_270"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_271.avif"
-        usemap="#map_271"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_272.avif"
-        usemap="#map_272"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_273.avif"
-        usemap="#map_273"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_274.avif"
-        usemap="#map_274"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_275.avif"
-        usemap="#map_275"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_276.avif"
-        usemap="#map_276"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_277.avif"
-        usemap="#map_277"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_278.avif"
-        usemap="#map_278"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_279.avif"
-        usemap="#map_279"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_280.avif"
-        usemap="#map_280"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_281.avif"
-        usemap="#map_281"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_282.avif"
-        usemap="#map_282"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_283.avif"
-        usemap="#map_283"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_284.avif"
-        usemap="#map_284"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_285.avif"
-        usemap="#map_285"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_286.avif"
-        usemap="#map_286"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_287.avif"
-        usemap="#map_287"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_288.avif"
-        usemap="#map_288"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_289.avif"
-        usemap="#map_289"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_290.avif"
-        usemap="#map_290"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_291.avif"
-        usemap="#map_291"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_292.avif"
-        usemap="#map_292"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_293.avif"
-        usemap="#map_293"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_294.avif"
-        usemap="#map_294"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_295.avif"
-        usemap="#map_295"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_296.avif"
-        usemap="#map_296"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_297.avif"
-        usemap="#map_297"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_298.avif"
-        usemap="#map_298"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_299.avif"
-        usemap="#map_299"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_300.avif"
-        usemap="#map_300"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_301.avif"
-        usemap="#map_301"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_302.avif"
-        usemap="#map_302"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_303.avif"
-        usemap="#map_303"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_304.avif"
-        usemap="#map_304"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_305.avif"
-        usemap="#map_305"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_306.avif"
-        usemap="#map_306"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_307.avif"
-        usemap="#map_307"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_308.avif"
-        usemap="#map_308"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_309.avif"
-        usemap="#map_309"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_310.avif"
-        usemap="#map_310"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_311.avif"
-        usemap="#map_311"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_312.avif"
-        usemap="#map_312"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_313.avif"
-        usemap="#map_313"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_314.avif"
-        usemap="#map_314"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_315.avif"
-        usemap="#map_315"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_316.avif"
-        usemap="#map_316"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_317.avif"
-        usemap="#map_317"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_318.avif"
-        usemap="#map_318"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_319.avif"
-        usemap="#map_319"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_320.avif"
-        usemap="#map_320"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_321.avif"
-        usemap="#map_321"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_322.avif"
-        usemap="#map_322"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_323.avif"
-        usemap="#map_323"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_324.avif"
-        usemap="#map_324"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_325.avif"
-        usemap="#map_325"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_326.avif"
-        usemap="#map_326"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_327.avif"
-        usemap="#map_327"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_328.avif"
-        usemap="#map_328"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_329.avif"
-        usemap="#map_329"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_330.avif"
-        usemap="#map_330"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_331.avif"
-        usemap="#map_331"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_332.avif"
-        usemap="#map_332"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_333.avif"
-        usemap="#map_333"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_334.avif"
-        usemap="#map_334"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_335.avif"
-        usemap="#map_335"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_336.avif"
-        usemap="#map_336"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_337.avif"
-        usemap="#map_337"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_338.avif"
-        usemap="#map_338"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_339.avif"
-        usemap="#map_339"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_340.avif"
-        usemap="#map_340"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_341.avif"
-        usemap="#map_341"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_342.avif"
-        usemap="#map_342"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_343.avif"
-        usemap="#map_343"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_344.avif"
-        usemap="#map_344"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_345.avif"
-        usemap="#map_345"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_346.avif"
-        usemap="#map_346"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_347.avif"
-        usemap="#map_347"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_348.avif"
-        usemap="#map_348"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_349.avif"
-        usemap="#map_349"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_350.avif"
-        usemap="#map_350"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_351.avif"
-        usemap="#map_351"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_352.avif"
-        usemap="#map_352"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_353.avif"
-        usemap="#map_353"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_354.avif"
-        usemap="#map_354"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_355.avif"
-        usemap="#map_355"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_356.avif"
-        usemap="#map_356"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_357.avif"
-        usemap="#map_357"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_358.avif"
-        usemap="#map_358"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_359.avif"
-        usemap="#map_359"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_360.avif"
-        usemap="#map_360"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_361.avif"
-        usemap="#map_361"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_362.avif"
-        usemap="#map_362"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_363.avif"
-        usemap="#map_363"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_364.avif"
-        usemap="#map_364"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_365.avif"
-        usemap="#map_365"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_366.avif"
-        usemap="#map_366"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_367.avif"
-        usemap="#map_367"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_368.avif"
-        usemap="#map_368"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_369.avif"
-        usemap="#map_369"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_370.avif"
-        usemap="#map_370"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_371.avif"
-        usemap="#map_371"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_372.avif"
-        usemap="#map_372"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_373.avif"
-        usemap="#map_373"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_374.avif"
-        usemap="#map_374"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_375.avif"
-        usemap="#map_375"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_376.avif"
-        usemap="#map_376"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_377.avif"
-        usemap="#map_377"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_378.avif"
-        usemap="#map_378"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_379.avif"
-        usemap="#map_379"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_380.avif"
-        usemap="#map_380"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_381.avif"
-        usemap="#map_381"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_382.avif"
-        usemap="#map_382"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_383.avif"
-        usemap="#map_383"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_384.avif"
-        usemap="#map_384"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_385.avif"
-        usemap="#map_385"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_386.avif"
-        usemap="#map_386"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_387.avif"
-        usemap="#map_387"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_388.avif"
-        usemap="#map_388"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_389.avif"
-        usemap="#map_389"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_390.avif"
-        usemap="#map_390"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_391.avif"
-        usemap="#map_391"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_392.avif"
-        usemap="#map_392"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_393.avif"
-        usemap="#map_393"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_394.avif"
-        usemap="#map_394"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_395.avif"
-        usemap="#map_395"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_396.avif"
-        usemap="#map_396"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_397.avif"
-        usemap="#map_397"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_398.avif"
-        usemap="#map_398"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_399.avif"
-        usemap="#map_399"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_400.avif"
-        usemap="#map_400"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_401.avif"
-        usemap="#map_401"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_402.avif"
-        usemap="#map_402"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_403.avif"
-        usemap="#map_403"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_404.avif"
-        usemap="#map_404"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_405.avif"
-        usemap="#map_405"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_406.avif"
-        usemap="#map_406"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_407.avif"
-        usemap="#map_407"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_408.avif"
-        usemap="#map_408"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_409.avif"
-        usemap="#map_409"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_410.avif"
-        usemap="#map_410"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_411.avif"
-        usemap="#map_411"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_412.avif"
-        usemap="#map_412"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_413.avif"
-        usemap="#map_413"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_414.avif"
-        usemap="#map_414"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_415.avif"
-        usemap="#map_415"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_416.avif"
-        usemap="#map_416"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_417.avif"
-        usemap="#map_417"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_418.avif"
-        usemap="#map_418"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_419.avif"
-        usemap="#map_419"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_420.avif"
-        usemap="#map_420"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_421.avif"
-        usemap="#map_421"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_422.avif"
-        usemap="#map_422"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_423.avif"
-        usemap="#map_423"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_424.avif"
-        usemap="#map_424"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_425.avif"
-        usemap="#map_425"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_426.avif"
-        usemap="#map_426"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_427.avif"
-        usemap="#map_427"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_428.avif"
-        usemap="#map_428"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_429.avif"
-        usemap="#map_429"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_430.avif"
-        usemap="#map_430"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_431.avif"
-        usemap="#map_431"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_432.avif"
-        usemap="#map_432"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_433.avif"
-        usemap="#map_433"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_434.avif"
-        usemap="#map_434"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_435.avif"
-        usemap="#map_435"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_436.avif"
-        usemap="#map_436"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_437.avif"
-        usemap="#map_437"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_438.avif"
-        usemap="#map_438"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_439.avif"
-        usemap="#map_439"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_440.avif"
-        usemap="#map_440"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_441.avif"
-        usemap="#map_441"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_442.avif"
-        usemap="#map_442"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_443.avif"
-        usemap="#map_443"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_444.avif"
-        usemap="#map_444"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_445.avif"
-        usemap="#map_445"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_446.avif"
-        usemap="#map_446"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_447.avif"
-        usemap="#map_447"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_448.avif"
-        usemap="#map_448"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_449.avif"
-        usemap="#map_449"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_450.avif"
-        usemap="#map_450"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_451.avif"
-        usemap="#map_451"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_452.avif"
-        usemap="#map_452"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_453.avif"
-        usemap="#map_453"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
-      <img
-        src="tile_454.avif"
-        usemap="#map_454"
-        width="360"
-        height="360"
-        loading="lazy"
-        onload="loadMap(this)"
-      />
+      <img src="tile_1.avif" usemap="#map_1" width="360" height="360" fetchpriority="high" onload="loadMap(this)">
+<img src="tile_2.avif" usemap="#map_2" width="360" height="360" fetchpriority="high" onload="loadMap(this)">
+<img src="tile_3.avif" usemap="#map_3" width="360" height="360" fetchpriority="high" onload="loadMap(this)">
+<img src="tile_4.avif" usemap="#map_4" width="360" height="360" fetchpriority="high" onload="loadMap(this)">
+<img src="tile_5.avif" usemap="#map_5" width="360" height="360" onload="loadMap(this)">
+<img src="tile_6.avif" usemap="#map_6" width="360" height="360" onload="loadMap(this)">
+<img src="tile_7.avif" usemap="#map_7" width="360" height="360" onload="loadMap(this)">
+<img src="tile_8.avif" usemap="#map_8" width="360" height="360" onload="loadMap(this)">
+<img src="tile_9.avif" usemap="#map_9" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_10.avif" usemap="#map_10" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_11.avif" usemap="#map_11" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_12.avif" usemap="#map_12" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_13.avif" usemap="#map_13" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_14.avif" usemap="#map_14" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_15.avif" usemap="#map_15" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_16.avif" usemap="#map_16" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_17.avif" usemap="#map_17" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_18.avif" usemap="#map_18" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_19.avif" usemap="#map_19" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_20.avif" usemap="#map_20" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_21.avif" usemap="#map_21" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_22.avif" usemap="#map_22" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_23.avif" usemap="#map_23" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_24.avif" usemap="#map_24" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_25.avif" usemap="#map_25" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_26.avif" usemap="#map_26" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_27.avif" usemap="#map_27" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_28.avif" usemap="#map_28" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_29.avif" usemap="#map_29" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_30.avif" usemap="#map_30" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_31.avif" usemap="#map_31" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_32.avif" usemap="#map_32" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_33.avif" usemap="#map_33" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_34.avif" usemap="#map_34" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_35.avif" usemap="#map_35" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_36.avif" usemap="#map_36" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_37.avif" usemap="#map_37" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_38.avif" usemap="#map_38" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_39.avif" usemap="#map_39" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_40.avif" usemap="#map_40" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_41.avif" usemap="#map_41" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_42.avif" usemap="#map_42" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_43.avif" usemap="#map_43" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_44.avif" usemap="#map_44" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_45.avif" usemap="#map_45" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_46.avif" usemap="#map_46" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_47.avif" usemap="#map_47" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_48.avif" usemap="#map_48" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_49.avif" usemap="#map_49" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_50.avif" usemap="#map_50" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_51.avif" usemap="#map_51" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_52.avif" usemap="#map_52" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_53.avif" usemap="#map_53" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_54.avif" usemap="#map_54" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_55.avif" usemap="#map_55" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_56.avif" usemap="#map_56" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_57.avif" usemap="#map_57" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_58.avif" usemap="#map_58" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_59.avif" usemap="#map_59" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_60.avif" usemap="#map_60" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_61.avif" usemap="#map_61" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_62.avif" usemap="#map_62" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_63.avif" usemap="#map_63" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_64.avif" usemap="#map_64" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_65.avif" usemap="#map_65" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_66.avif" usemap="#map_66" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_67.avif" usemap="#map_67" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_68.avif" usemap="#map_68" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_69.avif" usemap="#map_69" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_70.avif" usemap="#map_70" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_71.avif" usemap="#map_71" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_72.avif" usemap="#map_72" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_73.avif" usemap="#map_73" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_74.avif" usemap="#map_74" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_75.avif" usemap="#map_75" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_76.avif" usemap="#map_76" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_77.avif" usemap="#map_77" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_78.avif" usemap="#map_78" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_79.avif" usemap="#map_79" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_80.avif" usemap="#map_80" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_81.avif" usemap="#map_81" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_82.avif" usemap="#map_82" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_83.avif" usemap="#map_83" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_84.avif" usemap="#map_84" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_85.avif" usemap="#map_85" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_86.avif" usemap="#map_86" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_87.avif" usemap="#map_87" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_88.avif" usemap="#map_88" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_89.avif" usemap="#map_89" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_90.avif" usemap="#map_90" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_91.avif" usemap="#map_91" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_92.avif" usemap="#map_92" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_93.avif" usemap="#map_93" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_94.avif" usemap="#map_94" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_95.avif" usemap="#map_95" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_96.avif" usemap="#map_96" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_97.avif" usemap="#map_97" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_98.avif" usemap="#map_98" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_99.avif" usemap="#map_99" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_100.avif" usemap="#map_100" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_101.avif" usemap="#map_101" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_102.avif" usemap="#map_102" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_103.avif" usemap="#map_103" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_104.avif" usemap="#map_104" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_105.avif" usemap="#map_105" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_106.avif" usemap="#map_106" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_107.avif" usemap="#map_107" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_108.avif" usemap="#map_108" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_109.avif" usemap="#map_109" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_110.avif" usemap="#map_110" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_111.avif" usemap="#map_111" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_112.avif" usemap="#map_112" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_113.avif" usemap="#map_113" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_114.avif" usemap="#map_114" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_115.avif" usemap="#map_115" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_116.avif" usemap="#map_116" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_117.avif" usemap="#map_117" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_118.avif" usemap="#map_118" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_119.avif" usemap="#map_119" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_120.avif" usemap="#map_120" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_121.avif" usemap="#map_121" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_122.avif" usemap="#map_122" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_123.avif" usemap="#map_123" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_124.avif" usemap="#map_124" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_125.avif" usemap="#map_125" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_126.avif" usemap="#map_126" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_127.avif" usemap="#map_127" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_128.avif" usemap="#map_128" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_129.avif" usemap="#map_129" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_130.avif" usemap="#map_130" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_131.avif" usemap="#map_131" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_132.avif" usemap="#map_132" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_133.avif" usemap="#map_133" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_134.avif" usemap="#map_134" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_135.avif" usemap="#map_135" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_136.avif" usemap="#map_136" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_137.avif" usemap="#map_137" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_138.avif" usemap="#map_138" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_139.avif" usemap="#map_139" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_140.avif" usemap="#map_140" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_141.avif" usemap="#map_141" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_142.avif" usemap="#map_142" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_143.avif" usemap="#map_143" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_144.avif" usemap="#map_144" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_145.avif" usemap="#map_145" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_146.avif" usemap="#map_146" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_147.avif" usemap="#map_147" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_148.avif" usemap="#map_148" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_149.avif" usemap="#map_149" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_150.avif" usemap="#map_150" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_151.avif" usemap="#map_151" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_152.avif" usemap="#map_152" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_153.avif" usemap="#map_153" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_154.avif" usemap="#map_154" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_155.avif" usemap="#map_155" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_156.avif" usemap="#map_156" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_157.avif" usemap="#map_157" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_158.avif" usemap="#map_158" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_159.avif" usemap="#map_159" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_160.avif" usemap="#map_160" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_161.avif" usemap="#map_161" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_162.avif" usemap="#map_162" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_163.avif" usemap="#map_163" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_164.avif" usemap="#map_164" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_165.avif" usemap="#map_165" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_166.avif" usemap="#map_166" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_167.avif" usemap="#map_167" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_168.avif" usemap="#map_168" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_169.avif" usemap="#map_169" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_170.avif" usemap="#map_170" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_171.avif" usemap="#map_171" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_172.avif" usemap="#map_172" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_173.avif" usemap="#map_173" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_174.avif" usemap="#map_174" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_175.avif" usemap="#map_175" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_176.avif" usemap="#map_176" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_177.avif" usemap="#map_177" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_178.avif" usemap="#map_178" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_179.avif" usemap="#map_179" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_180.avif" usemap="#map_180" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_181.avif" usemap="#map_181" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_182.avif" usemap="#map_182" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_183.avif" usemap="#map_183" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_184.avif" usemap="#map_184" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_185.avif" usemap="#map_185" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_186.avif" usemap="#map_186" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_187.avif" usemap="#map_187" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_188.avif" usemap="#map_188" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_189.avif" usemap="#map_189" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_190.avif" usemap="#map_190" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_191.avif" usemap="#map_191" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_192.avif" usemap="#map_192" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_193.avif" usemap="#map_193" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_194.avif" usemap="#map_194" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_195.avif" usemap="#map_195" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_196.avif" usemap="#map_196" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_197.avif" usemap="#map_197" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_198.avif" usemap="#map_198" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_199.avif" usemap="#map_199" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_200.avif" usemap="#map_200" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_201.avif" usemap="#map_201" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_202.avif" usemap="#map_202" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_203.avif" usemap="#map_203" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_204.avif" usemap="#map_204" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_205.avif" usemap="#map_205" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_206.avif" usemap="#map_206" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_207.avif" usemap="#map_207" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_208.avif" usemap="#map_208" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_209.avif" usemap="#map_209" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_210.avif" usemap="#map_210" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_211.avif" usemap="#map_211" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_212.avif" usemap="#map_212" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_213.avif" usemap="#map_213" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_214.avif" usemap="#map_214" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_215.avif" usemap="#map_215" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_216.avif" usemap="#map_216" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_217.avif" usemap="#map_217" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_218.avif" usemap="#map_218" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_219.avif" usemap="#map_219" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_220.avif" usemap="#map_220" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_221.avif" usemap="#map_221" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_222.avif" usemap="#map_222" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_223.avif" usemap="#map_223" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_224.avif" usemap="#map_224" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_225.avif" usemap="#map_225" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_226.avif" usemap="#map_226" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_227.avif" usemap="#map_227" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_228.avif" usemap="#map_228" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_229.avif" usemap="#map_229" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_230.avif" usemap="#map_230" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_231.avif" usemap="#map_231" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_232.avif" usemap="#map_232" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_233.avif" usemap="#map_233" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_234.avif" usemap="#map_234" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_235.avif" usemap="#map_235" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_236.avif" usemap="#map_236" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_237.avif" usemap="#map_237" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_238.avif" usemap="#map_238" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_239.avif" usemap="#map_239" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_240.avif" usemap="#map_240" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_241.avif" usemap="#map_241" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_242.avif" usemap="#map_242" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_243.avif" usemap="#map_243" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_244.avif" usemap="#map_244" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_245.avif" usemap="#map_245" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_246.avif" usemap="#map_246" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_247.avif" usemap="#map_247" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_248.avif" usemap="#map_248" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_249.avif" usemap="#map_249" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_250.avif" usemap="#map_250" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_251.avif" usemap="#map_251" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_252.avif" usemap="#map_252" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_253.avif" usemap="#map_253" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_254.avif" usemap="#map_254" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_255.avif" usemap="#map_255" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_256.avif" usemap="#map_256" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_257.avif" usemap="#map_257" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_258.avif" usemap="#map_258" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_259.avif" usemap="#map_259" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_260.avif" usemap="#map_260" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_261.avif" usemap="#map_261" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_262.avif" usemap="#map_262" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_263.avif" usemap="#map_263" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_264.avif" usemap="#map_264" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_265.avif" usemap="#map_265" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_266.avif" usemap="#map_266" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_267.avif" usemap="#map_267" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_268.avif" usemap="#map_268" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_269.avif" usemap="#map_269" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_270.avif" usemap="#map_270" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_271.avif" usemap="#map_271" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_272.avif" usemap="#map_272" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_273.avif" usemap="#map_273" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_274.avif" usemap="#map_274" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_275.avif" usemap="#map_275" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_276.avif" usemap="#map_276" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_277.avif" usemap="#map_277" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_278.avif" usemap="#map_278" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_279.avif" usemap="#map_279" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_280.avif" usemap="#map_280" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_281.avif" usemap="#map_281" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_282.avif" usemap="#map_282" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_283.avif" usemap="#map_283" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_284.avif" usemap="#map_284" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_285.avif" usemap="#map_285" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_286.avif" usemap="#map_286" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_287.avif" usemap="#map_287" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_288.avif" usemap="#map_288" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_289.avif" usemap="#map_289" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_290.avif" usemap="#map_290" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_291.avif" usemap="#map_291" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_292.avif" usemap="#map_292" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_293.avif" usemap="#map_293" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_294.avif" usemap="#map_294" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_295.avif" usemap="#map_295" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_296.avif" usemap="#map_296" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_297.avif" usemap="#map_297" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_298.avif" usemap="#map_298" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_299.avif" usemap="#map_299" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_300.avif" usemap="#map_300" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_301.avif" usemap="#map_301" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_302.avif" usemap="#map_302" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_303.avif" usemap="#map_303" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_304.avif" usemap="#map_304" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_305.avif" usemap="#map_305" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_306.avif" usemap="#map_306" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_307.avif" usemap="#map_307" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_308.avif" usemap="#map_308" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_309.avif" usemap="#map_309" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_310.avif" usemap="#map_310" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_311.avif" usemap="#map_311" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_312.avif" usemap="#map_312" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_313.avif" usemap="#map_313" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_314.avif" usemap="#map_314" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_315.avif" usemap="#map_315" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_316.avif" usemap="#map_316" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_317.avif" usemap="#map_317" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_318.avif" usemap="#map_318" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_319.avif" usemap="#map_319" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_320.avif" usemap="#map_320" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_321.avif" usemap="#map_321" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_322.avif" usemap="#map_322" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_323.avif" usemap="#map_323" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_324.avif" usemap="#map_324" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_325.avif" usemap="#map_325" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_326.avif" usemap="#map_326" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_327.avif" usemap="#map_327" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_328.avif" usemap="#map_328" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_329.avif" usemap="#map_329" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_330.avif" usemap="#map_330" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_331.avif" usemap="#map_331" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_332.avif" usemap="#map_332" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_333.avif" usemap="#map_333" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_334.avif" usemap="#map_334" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_335.avif" usemap="#map_335" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_336.avif" usemap="#map_336" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_337.avif" usemap="#map_337" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_338.avif" usemap="#map_338" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_339.avif" usemap="#map_339" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_340.avif" usemap="#map_340" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_341.avif" usemap="#map_341" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_342.avif" usemap="#map_342" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_343.avif" usemap="#map_343" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_344.avif" usemap="#map_344" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_345.avif" usemap="#map_345" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_346.avif" usemap="#map_346" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_347.avif" usemap="#map_347" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_348.avif" usemap="#map_348" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_349.avif" usemap="#map_349" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_350.avif" usemap="#map_350" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_351.avif" usemap="#map_351" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_352.avif" usemap="#map_352" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_353.avif" usemap="#map_353" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_354.avif" usemap="#map_354" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_355.avif" usemap="#map_355" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_356.avif" usemap="#map_356" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_357.avif" usemap="#map_357" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_358.avif" usemap="#map_358" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_359.avif" usemap="#map_359" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_360.avif" usemap="#map_360" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_361.avif" usemap="#map_361" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_362.avif" usemap="#map_362" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_363.avif" usemap="#map_363" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_364.avif" usemap="#map_364" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_365.avif" usemap="#map_365" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_366.avif" usemap="#map_366" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_367.avif" usemap="#map_367" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_368.avif" usemap="#map_368" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_369.avif" usemap="#map_369" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_370.avif" usemap="#map_370" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_371.avif" usemap="#map_371" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_372.avif" usemap="#map_372" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_373.avif" usemap="#map_373" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_374.avif" usemap="#map_374" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_375.avif" usemap="#map_375" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_376.avif" usemap="#map_376" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_377.avif" usemap="#map_377" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_378.avif" usemap="#map_378" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_379.avif" usemap="#map_379" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_380.avif" usemap="#map_380" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_381.avif" usemap="#map_381" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_382.avif" usemap="#map_382" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_383.avif" usemap="#map_383" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_384.avif" usemap="#map_384" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_385.avif" usemap="#map_385" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_386.avif" usemap="#map_386" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_387.avif" usemap="#map_387" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_388.avif" usemap="#map_388" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_389.avif" usemap="#map_389" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_390.avif" usemap="#map_390" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_391.avif" usemap="#map_391" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_392.avif" usemap="#map_392" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_393.avif" usemap="#map_393" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_394.avif" usemap="#map_394" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_395.avif" usemap="#map_395" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_396.avif" usemap="#map_396" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_397.avif" usemap="#map_397" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_398.avif" usemap="#map_398" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_399.avif" usemap="#map_399" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_400.avif" usemap="#map_400" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_401.avif" usemap="#map_401" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_402.avif" usemap="#map_402" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_403.avif" usemap="#map_403" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_404.avif" usemap="#map_404" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_405.avif" usemap="#map_405" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_406.avif" usemap="#map_406" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_407.avif" usemap="#map_407" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_408.avif" usemap="#map_408" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_409.avif" usemap="#map_409" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_410.avif" usemap="#map_410" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_411.avif" usemap="#map_411" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_412.avif" usemap="#map_412" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_413.avif" usemap="#map_413" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_414.avif" usemap="#map_414" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_415.avif" usemap="#map_415" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_416.avif" usemap="#map_416" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_417.avif" usemap="#map_417" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_418.avif" usemap="#map_418" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_419.avif" usemap="#map_419" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_420.avif" usemap="#map_420" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_421.avif" usemap="#map_421" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_422.avif" usemap="#map_422" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_423.avif" usemap="#map_423" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_424.avif" usemap="#map_424" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_425.avif" usemap="#map_425" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_426.avif" usemap="#map_426" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_427.avif" usemap="#map_427" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_428.avif" usemap="#map_428" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_429.avif" usemap="#map_429" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_430.avif" usemap="#map_430" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_431.avif" usemap="#map_431" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_432.avif" usemap="#map_432" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_433.avif" usemap="#map_433" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_434.avif" usemap="#map_434" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_435.avif" usemap="#map_435" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_436.avif" usemap="#map_436" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_437.avif" usemap="#map_437" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_438.avif" usemap="#map_438" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_439.avif" usemap="#map_439" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_440.avif" usemap="#map_440" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_441.avif" usemap="#map_441" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_442.avif" usemap="#map_442" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_443.avif" usemap="#map_443" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_444.avif" usemap="#map_444" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_445.avif" usemap="#map_445" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_446.avif" usemap="#map_446" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_447.avif" usemap="#map_447" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_448.avif" usemap="#map_448" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_449.avif" usemap="#map_449" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_450.avif" usemap="#map_450" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_451.avif" usemap="#map_451" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_452.avif" usemap="#map_452" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_453.avif" usemap="#map_453" width="360" height="360" loading="lazy" onload="loadMap(this)">
+<img src="tile_454.avif" usemap="#map_454" width="360" height="360" loading="lazy" onload="loadMap(this)">
+
     </div>
-  </body>
+</body>
 </html>
