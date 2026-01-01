@@ -10,6 +10,8 @@
     "download:data": "node download-favicons-data.js",
     "process": "node process-favicons.js",
     "gen:tiles": "node generate-tiles.js",
+    "gen:tiles:force": "node generate-tiles.js --force",
+    "gen:tiles:emulate": "node generate-tiles.js --emulate",
     "clean:tiles": "rm dist/index.html dist/tile* dist/_headers dist/og_image*",
     "format": "prettier --write ."
   },

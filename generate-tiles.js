@@ -15,8 +15,8 @@ const CONFIG = {
   HIGH_PRIORITY_TILES: 4,
   HOSTNAME: 'favoriteiconsofinternet.com',
   FORCE_REGEN: process.argv.includes('--force'),
-  EMULATE_MORE_TILES_HTML: true,
-  EMULATE_MORE_TILES_HTML_TOTAL_ICONS: 20000,
+  EMULATE_MORE_TILES: process.argv.includes('--emulate'),
+  EMULATE_MORE_TILES_TOTAL_ICONS: 20000,
 };
 
 async function ensureDir(dir) {
@@ -339,16 +339,24 @@ async function generateTiles() {
     }
   }
 
-  if (CONFIG.EMULATE_MORE_TILES_HTML) {
+  if (CONFIG.EMULATE_MORE_TILES && validEntries.length > 0) {
+    // Generate emulated tile (the pattern used for all emulated tiles)
+    const emulateTileIndex = 'emulated';
+    const firstEntry = validEntries[0];
+    const chunk = Array(chunkSize)
+      .fill(null)
+      .map(() => ({ ...firstEntry }));
+    await generateOneTile(chunk, emulateTileIndex, lastExistingTileIndex, cellSize, imageSize);
+
     const totalEmulatedTiles = Math.ceil(
-      CONFIG.EMULATE_MORE_TILES_HTML_TOTAL_ICONS / CONFIG.GRID_SIZE ** 2 - chunks.length,
+      CONFIG.EMULATE_MORE_TILES_TOTAL_ICONS / CONFIG.GRID_SIZE ** 2 - chunks.length,
     );
 
     console.log(`\n🧩 Creating ${totalEmulatedTiles} emulated tiles...`);
 
     for (let i = 0; i < totalEmulatedTiles; i++) {
       const tileIndex = chunks.length + i;
-      const imgTag = `<img src="tile_1.avif" usemap="#map_${tileIndex}" width="${imageSize}" height="${imageSize}" loading="lazy" onload="loadMap(this, ${tileIndex}, 1)">\n`;
+      const imgTag = `<img src="tile_${emulateTileIndex}.avif" usemap="#map_${tileIndex}" width="${imageSize}" height="${imageSize}" loading="lazy" onload="loadMap(this, ${tileIndex}, '${emulateTileIndex}')">\n`;
       lazyImagesHtml += imgTag;
     }
   }
