@@ -355,7 +355,7 @@ async function generateTiles() {
     console.log(`\n🧩 Creating ${totalEmulatedTiles} emulated tiles...`);
 
     for (let i = 0; i < totalEmulatedTiles; i++) {
-      const tileIndex = chunks.length + i;
+      const tileIndex = chunks.length + i + 1;
       const imgTag = `<img src="tile_${emulateTileIndex}.avif" usemap="#map_${tileIndex}" width="${imageSize}" height="${imageSize}" loading="lazy" onload="loadMap(this, ${tileIndex}, '${emulateTileIndex}')">\n`;
       lazyImagesHtml += imgTag;
     }
