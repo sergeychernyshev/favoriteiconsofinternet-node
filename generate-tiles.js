@@ -111,6 +111,140 @@ async function generateOgImage(entries, cellSize) {
   console.log('✅ Saved OG Image: dist/og_image.webp');
 }
 
+async function generateOneTile(chunk, tileIndex, lastExistingTileIndex, cellSize, imageSize) {
+  const tileFilename = `tile_${tileIndex}.avif`;
+  const tilePath = path.join(CONFIG.TILES_DIR, tileFilename);
+
+  console.log(`\n🎨 Generating Tile #${tileIndex} (${chunk.length} icons)...`);
+
+  const composites = [];
+  const domains = [];
+
+  for (let j = 0; j < chunk.length; j++) {
+    const entry = chunk[j];
+    const domain = new URL(entry.url).hostname.replace(/^www\./, '');
+    domains.push(domain);
+
+    // Calculate position
+    const col = j % CONFIG.GRID_SIZE;
+    const row = Math.floor(j / CONFIG.GRID_SIZE);
+    const left = col * cellSize + CONFIG.BORDER_SIZE;
+    const top = row * cellSize + CONFIG.BORDER_SIZE;
+
+    try {
+      // Resize image to ensure it fits the target size
+      const resizedImageBuffer = await sharp(entry.localPath)
+        .resize(CONFIG.ICON_SIZE, CONFIG.ICON_SIZE)
+        .png()
+        .toBuffer();
+
+      // Add to image composite list
+      composites.push({
+        input: resizedImageBuffer,
+        top: top,
+        left: left,
+      });
+    } catch (err) {
+      console.warn(`  ⚠️ Skipped resizing/compositing for ${entry.url}: ${err.message}`);
+      continue; // Skip this one if resizing fails
+    }
+
+    // Update entry with tile info
+    entry.tile = {
+      file: tileFilename,
+      index: j,
+      row: row,
+      col: col,
+    };
+  }
+
+  // Generate Image and JSON
+  try {
+    let shouldGenerate = CONFIG.FORCE_REGEN;
+
+    if (!shouldGenerate) {
+      if (tileIndex === lastExistingTileIndex) {
+        console.log(`  🔄 Forcing regeneration of the last existing tile #${tileIndex}...`);
+        shouldGenerate = true;
+      } else {
+        try {
+          const tileStats = await fs.stat(tilePath);
+          const tileMtime = tileStats.mtimeMs;
+
+          // Check if any icon in this chunk is newer than the tile
+          let isStale = false;
+          for (const entry of chunk) {
+            try {
+              const iconStats = await fs.stat(entry.localPath);
+              if (iconStats.mtimeMs > tileMtime) {
+                isStale = true;
+                break;
+              }
+            } catch (e) {
+              // If icon file is missing (shouldn't happen given filter), force regen
+              isStale = true;
+              break;
+            }
+          }
+
+          if (isStale) {
+            console.log(`  🔄 Tile #${tileIndex} is stale. Regenerating...`);
+            shouldGenerate = true;
+          } else {
+            console.log(`  ⏭️  Tile #${tileIndex} is up to date. Skipping generation.`);
+          }
+        } catch (e) {
+          // Tile doesn't exist
+          console.log(`  ✨ Tile #${tileIndex} is missing. Generating...`);
+          shouldGenerate = true;
+        }
+      }
+    } else {
+      console.log(`  🔄 Force regenerating Tile #${tileIndex}...`);
+    }
+
+    // Check if JSON exists, if not, force generation of at least JSON
+    const domainsJsonFilename = `tile_${tileIndex}.json`;
+    const domainsJsonPath = path.join(CONFIG.TILES_DIR, domainsJsonFilename);
+    let shouldGenerateJson = shouldGenerate;
+
+    if (!shouldGenerateJson) {
+      try {
+        await fs.access(domainsJsonPath);
+      } catch {
+        console.log(`  ✨ JSON for Tile #${tileIndex} is missing. Generating...`);
+        shouldGenerateJson = true;
+      }
+    }
+
+    if (shouldGenerateJson) {
+      try {
+        await fs.writeFile(domainsJsonPath, JSON.stringify(domains, null, 2));
+        console.log(`  ✅ Saved Domains JSON: ${domainsJsonPath}`);
+      } catch (err) {
+        console.error(`  ❌ Error saving domains JSON for tile ${tileIndex}: ${err.message}`);
+      }
+    }
+
+    if (shouldGenerate) {
+      await sharp({
+        create: {
+          width: imageSize,
+          height: imageSize,
+          channels: 4,
+          background: CONFIG.BACKGROUND_COLOR,
+        },
+      })
+        .composite(composites)
+        .avif() // Changed to .avif()
+        .toFile(tilePath);
+      console.log(`  ✅ Saved Image: ${tilePath}`);
+    }
+  } catch (err) {
+    console.error(`  ❌ Error generating image for tile ${tileIndex}: ${err.message}`);
+  }
+}
+
 async function generateTiles() {
   console.log('🚀 Starting tile generation process...');
 
@@ -185,142 +319,7 @@ async function generateTiles() {
     const chunk = chunks[i];
     const tileIndex = i + 1;
     const tileFilename = `tile_${tileIndex}.avif`;
-    const tilePath = path.join(CONFIG.TILES_DIR, tileFilename);
-
-    console.log(`\n🎨 Generating Tile #${tileIndex} (${chunk.length} icons)...`);
-
-    const composites = [];
-    const htmlAreas = [];
-    const domains = [];
-
-    for (let j = 0; j < chunk.length; j++) {
-      const entry = chunk[j];
-      const domain = new URL(entry.url).hostname.replace(/^www\./, '');
-      domains.push(domain);
-
-      // Calculate position
-      const col = j % CONFIG.GRID_SIZE;
-      const row = Math.floor(j / CONFIG.GRID_SIZE);
-      const left = col * cellSize + CONFIG.BORDER_SIZE;
-      const top = row * cellSize + CONFIG.BORDER_SIZE;
-
-      try {
-        // Resize image to ensure it fits the target size
-        const resizedImageBuffer = await sharp(entry.localPath)
-          .resize(CONFIG.ICON_SIZE, CONFIG.ICON_SIZE)
-          .png()
-          .toBuffer();
-
-        // Add to image composite list
-        composites.push({
-          input: resizedImageBuffer,
-          top: top,
-          left: left,
-        });
-      } catch (err) {
-        console.warn(`  ⚠️ Skipped resizing/compositing for ${entry.url}: ${err.message}`);
-        continue; // Skip this one if resizing fails
-      }
-
-      // Add to HTML map areas
-      htmlAreas.push(
-        `    <area shape="rect" coords="${left},${top},${left + CONFIG.ICON_SIZE},${top + CONFIG.ICON_SIZE}" href="${entry.url}" title="${entry.url}">`,
-      );
-
-      // Update entry with tile info
-      entry.tile = {
-        file: tileFilename,
-        index: j,
-        row: row,
-        col: col,
-      };
-    }
-
-    // Generate Image and JSON
-    try {
-      let shouldGenerate = CONFIG.FORCE_REGEN;
-
-      if (!shouldGenerate) {
-        if (tileIndex === lastExistingTileIndex) {
-          console.log(`  🔄 Forcing regeneration of the last existing tile #${tileIndex}...`);
-          shouldGenerate = true;
-        } else {
-          try {
-            const tileStats = await fs.stat(tilePath);
-            const tileMtime = tileStats.mtimeMs;
-
-            // Check if any icon in this chunk is newer than the tile
-            let isStale = false;
-            for (const entry of chunk) {
-              try {
-                const iconStats = await fs.stat(entry.localPath);
-                if (iconStats.mtimeMs > tileMtime) {
-                  isStale = true;
-                  break;
-                }
-              } catch (e) {
-                // If icon file is missing (shouldn't happen given filter), force regen
-                isStale = true;
-                break;
-              }
-            }
-
-            if (isStale) {
-              console.log(`  🔄 Tile #${tileIndex} is stale. Regenerating...`);
-              shouldGenerate = true;
-            } else {
-              console.log(`  ⏭️  Tile #${tileIndex} is up to date. Skipping generation.`);
-            }
-          } catch (e) {
-            // Tile doesn't exist
-            console.log(`  ✨ Tile #${tileIndex} is missing. Generating...`);
-            shouldGenerate = true;
-          }
-        }
-      } else {
-        console.log(`  🔄 Force regenerating Tile #${tileIndex}...`);
-      }
-
-      // Check if JSON exists, if not, force generation of at least JSON
-      const domainsJsonFilename = `tile_${tileIndex}.json`;
-      const domainsJsonPath = path.join(CONFIG.TILES_DIR, domainsJsonFilename);
-      let shouldGenerateJson = shouldGenerate;
-
-      if (!shouldGenerateJson) {
-        try {
-          await fs.access(domainsJsonPath);
-        } catch {
-          console.log(`  ✨ JSON for Tile #${tileIndex} is missing. Generating...`);
-          shouldGenerateJson = true;
-        }
-      }
-
-      if (shouldGenerateJson) {
-        try {
-          await fs.writeFile(domainsJsonPath, JSON.stringify(domains, null, 2));
-          console.log(`  ✅ Saved Domains JSON: ${domainsJsonPath}`);
-        } catch (err) {
-          console.error(`  ❌ Error saving domains JSON for tile ${tileIndex}: ${err.message}`);
-        }
-      }
-
-      if (shouldGenerate) {
-        await sharp({
-          create: {
-            width: imageSize,
-            height: imageSize,
-            channels: 4,
-            background: CONFIG.BACKGROUND_COLOR,
-          },
-        })
-          .composite(composites)
-          .avif() // Changed to .avif()
-          .toFile(tilePath);
-        console.log(`  ✅ Saved Image: ${tilePath}`);
-      }
-    } catch (err) {
-      console.error(`  ❌ Error generating image for tile ${tileIndex}: ${err.message}`);
-    }
+    await generateOneTile(chunk, tileIndex, lastExistingTileIndex, cellSize, imageSize);
 
     // Append to Accumulators
     const mapName = `map_${tileIndex}`;
