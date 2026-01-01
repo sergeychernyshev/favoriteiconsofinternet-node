@@ -360,9 +360,7 @@ async function generateTiles() {
 
     const totalEmulatedTiles = Math.max(
       0,
-      Math.ceil(
-        CONFIG.EMULATE_MORE_TILES_TOTAL_ICONS / CONFIG.GRID_SIZE ** 2 - chunks.length,
-      ),
+      Math.ceil(CONFIG.EMULATE_MORE_TILES_TOTAL_ICONS / CONFIG.GRID_SIZE ** 2 - chunks.length),
     );
 
     console.log(`\n🧩 Creating ${totalEmulatedTiles} emulated tiles...`);
