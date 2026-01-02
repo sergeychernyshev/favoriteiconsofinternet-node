@@ -9,6 +9,7 @@
     "download:icons": "node download-favicons.js",
     "download:data": "node download-favicons-data.js",
     "process": "node process-favicons.js",
+    "migrate:icons": "node migrate-icons.js",
     "gen:tiles": "node generate-tiles.js",
     "gen:tiles:force": "node generate-tiles.js --force",
     "gen:tiles:emulate": "node generate-tiles.js --emulate",

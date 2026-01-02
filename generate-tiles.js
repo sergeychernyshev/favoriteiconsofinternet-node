@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import sharp from 'sharp';
 import { Command } from 'commander';
-import { getDomain, getIconFilename } from './utils.js';
+import { getIconRelativePath, getDomain } from './utils.js';
 
 const program = new Command();
 
@@ -34,19 +34,28 @@ const CONFIG = {
 async function loadIconMtimes() {
   console.log(`📂 Loading icon stats from ${CONFIG.ICONS_DIR}...`);
   const mtimes = new Map();
-  try {
-    const files = await fs.readdir(CONFIG.ICONS_DIR);
-    for (const file of files) {
-      if (file.endsWith('.png')) {
-        const filePath = path.join(CONFIG.ICONS_DIR, file);
+
+  async function walk(dir, relativeBase = '') {
+    const files = await fs.readdir(dir, { withFileTypes: true });
+    for (const dirent of files) {
+      const fullPath = path.join(dir, dirent.name);
+      const relativePath = path.join(relativeBase, dirent.name);
+
+      if (dirent.isDirectory()) {
+        await walk(fullPath, relativePath);
+      } else if (dirent.isFile() && dirent.name.endsWith('.png')) {
         try {
-          const stats = await fs.stat(filePath);
-          mtimes.set(file, stats.mtimeMs);
+          const stats = await fs.stat(fullPath);
+          mtimes.set(relativePath, stats.mtimeMs);
         } catch (e) {
           // Skip if stat fails
         }
       }
     }
+  }
+
+  try {
+    await walk(CONFIG.ICONS_DIR);
   } catch (e) {
     console.error(`❌ Failed to read icons directory: ${e.message}`);
   }
@@ -82,8 +91,8 @@ async function generateOgImage(entries, cellSize, iconMtimes) {
       // Check if any used icon is newer
       let isStale = false;
       for (const entry of iconsToUse) {
-        const filename = getIconFilename(entry.url);
-        const iconMtime = iconMtimes.get(filename);
+        const relativePath = getIconRelativePath(entry.url);
+        const iconMtime = iconMtimes.get(relativePath);
         if (iconMtime && iconMtime > ogMtime) {
           isStale = true;
           break;
@@ -116,7 +125,7 @@ async function generateOgImage(entries, cellSize, iconMtimes) {
     const top = row * cellSize + CONFIG.BORDER_SIZE;
 
     try {
-      const iconPath = path.join(CONFIG.ICONS_DIR, getIconFilename(entry.url));
+      const iconPath = path.join(CONFIG.ICONS_DIR, getIconRelativePath(entry.url));
       const resized = await sharp(iconPath)
         .resize(CONFIG.ICON_SIZE, CONFIG.ICON_SIZE)
         .png() // Convert to PNG first to ensure transparency is handled well before resizing/compositing if needed, but standard sharp pipeline handles this. Keeping png() as intermediate is fine, but output must be avif.
@@ -172,7 +181,7 @@ async function generateOneTile(
 
     try {
       // Resize image to ensure it fits the target size
-      const iconPath = path.join(CONFIG.ICONS_DIR, getIconFilename(entry.url));
+      const iconPath = path.join(CONFIG.ICONS_DIR, getIconRelativePath(entry.url));
       const resizedImageBuffer = await sharp(iconPath)
         .resize(CONFIG.ICON_SIZE, CONFIG.ICON_SIZE)
         .png()
@@ -214,8 +223,8 @@ async function generateOneTile(
           // Check if any icon in this chunk is newer than the tile
           let isStale = false;
           for (const entry of chunk) {
-            const filename = getIconFilename(entry.url);
-            const iconMtime = iconMtimes.get(filename);
+            const relativePath = getIconRelativePath(entry.url);
+            const iconMtime = iconMtimes.get(relativePath);
             if (iconMtime && iconMtime > tileMtime) {
               isStale = true;
               break;
@@ -301,7 +310,7 @@ async function generateTiles() {
         (e.status === 'downloaded' ||
           e.status === 'not_modified' ||
           e.status === 'skipped_recent') &&
-        iconMtimes.has(getIconFilename(e.url)) &&
+        iconMtimes.has(getIconRelativePath(e.url)) &&
         e.rank, // Ensure rank exists
     )
     .sort((a, b) => a.rank - b.rank);

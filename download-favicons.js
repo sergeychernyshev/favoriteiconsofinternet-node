@@ -3,7 +3,7 @@ import path from 'path';
 import { existsSync } from 'fs';
 import sharp from 'sharp';
 import { sharpsFromIco } from 'sharp-ico';
-import { getDomain, getIconFilename } from './utils.js';
+import { getDomain, getIconRelativePath } from './utils.js';
 
 // --- Configuration ---
 const CONFIG = {
@@ -166,8 +166,9 @@ async function downloadFavicons() {
         const imageBuffer = Buffer.from(buffer);
 
         // Resize and Save
-        const filename = getIconFilename(entry.url);
-        const outputPath = path.join(CONFIG.ICONS_DIR, filename);
+        const relativePath = getIconRelativePath(entry.url);
+        const outputPath = path.join(CONFIG.ICONS_DIR, relativePath);
+        await ensureDir(path.dirname(outputPath));
 
         // Determine if it's an ICO
         const isIco =
