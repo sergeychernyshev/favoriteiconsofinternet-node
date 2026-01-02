@@ -9,6 +9,7 @@ import { getDomain } from './utils.js';
 const inputFile = path.join(process.cwd(), 'favicons.json');
 const outputFile = path.join(process.cwd(), 'favicons-processed.json');
 const rankedListFile = path.join(process.cwd(), 'domain-lists', 'top10milliondomains.csv');
+const MAX_ENTRIES = 1000000;
 // ---------------------
 
 /**
@@ -27,20 +28,21 @@ async function processAndDeduplicateFavicons() {
 
     // 2. Process each entry to resolve the favicon URL.
     const processedEntries = entries.map((entry) => {
-      // Defensive check for required fields.
-      if (!entry.favicon || !entry.url) {
+      // Defensive check for required url field.
+      if (!entry.url) {
         return {
           ...entry,
           date: entry.date?.value || null, // Flatten date
-          error: 'Missing url or favicon field',
+          error: 'Missing url field',
         };
       }
 
+      const faviconInput = entry.favicon || '/favicon.ico';
       let absoluteFaviconUrl;
       try {
         // The URL constructor elegantly handles absolute, protocol-relative,
         // and root-relative paths by resolving them against the base `entry.url`.
-        const resolvedUrl = new URL(entry.favicon, entry.url);
+        const resolvedUrl = new URL(faviconInput, entry.url);
         absoluteFaviconUrl = resolvedUrl.href;
       } catch (e) {
         console.warn(`⚠️  Could not parse URL for entry: ${entry.url}. Error: ${e.message}`);
@@ -54,7 +56,7 @@ async function processAndDeduplicateFavicons() {
       // 3. Return a new object with the updated fields.
       return {
         ...entry,
-        date: entry.date.value, // Flatten the date object for simplicity.
+        date: entry.date?.value || entry.date, // Flatten the date object for simplicity.
         favicon: absoluteFaviconUrl, // Overwrite with the absolute URL.
       };
     });
@@ -94,6 +96,11 @@ async function processAndDeduplicateFavicons() {
 
     let processedLines = 0;
     for await (const line of rl) {
+      if (finalEntries.length >= MAX_ENTRIES) {
+        console.log(`⚠️  Reached limit of ${MAX_ENTRIES} entries. Stopping.`);
+        break;
+      }
+
       processedLines++;
       // Parse line: "1","facebook.com","10.00"
       const parts = line.split(',');
@@ -110,6 +117,14 @@ async function processAndDeduplicateFavicons() {
         entry.rank = parseInt(rankStr, 10);
         finalEntries.push(entry);
         uniqueEntriesMap.delete(domain); // Remove to avoid re-checking or just to track what's left
+      } else {
+        // Fallback for domains not in the BigQuery data
+        finalEntries.push({
+          url: `https://${domain}`,
+          favicon: `https://${domain}/favicon.ico`,
+          rank: parseInt(rankStr, 10),
+          date: new Date().toISOString(),
+        });
       }
     }
 

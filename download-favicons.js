@@ -84,7 +84,16 @@ async function downloadFavicons() {
 
   for (const entry of targets) {
     const domain = getDomain(entry.url);
-    const faviconUrl = entry.favicon;
+    let faviconUrl = entry.favicon;
+
+    if (!faviconUrl) {
+      try {
+        faviconUrl = new URL('/favicon.ico', entry.url).href;
+      } catch (e) {
+        console.warn(`  Warning: Could not construct fallback favicon URL for ${entry.url}`);
+      }
+    }
+
     const prevEntry = stateMap.get(entry.url);
 
     console.log(`\nProcessing [Rank ${entry.rank}] ${domain}...`);
@@ -141,6 +150,9 @@ async function downloadFavicons() {
     delete metadata.localPath; // Cleanup legacy field
 
     try {
+      if (!faviconUrl) {
+        throw new Error('No favicon URL available');
+      }
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), CONFIG.TIMEOUT_MS);
 
@@ -173,7 +185,7 @@ async function downloadFavicons() {
         // Determine if it's an ICO
         const isIco =
           (metadata.contentType && metadata.contentType.includes('ico')) ||
-          path.extname(new URL(faviconUrl).pathname).toLowerCase() === '.ico';
+          (faviconUrl && path.extname(new URL(faviconUrl).pathname).toLowerCase() === '.ico');
 
         let sharpInstance;
 
