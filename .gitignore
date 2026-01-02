@@ -6,3 +6,4 @@ favicons-tiled.json
 domain-lists
 .DS_Store
 icons/
+dist/tile_emulated.*
