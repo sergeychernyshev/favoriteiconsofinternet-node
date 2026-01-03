@@ -25,6 +25,7 @@ const CONFIG = {
   TIMEOUT_MS: 10000,
   TARGET_SIZE: 32,
   SKIP_DOWNLOAD_PERIOD_MS: 90 * 24 * 60 * 60 * 1000,
+  CONCURRENCY: 10,
 };
 
 async function ensureDir(dir) {
@@ -33,6 +34,26 @@ async function ensureDir(dir) {
   } catch {
     await fs.mkdir(dir, { recursive: true });
   }
+}
+
+async function runWithConcurrency(tasks, concurrency, taskHandler) {
+  const results = [];
+  const executing = new Set();
+
+  for (const item of tasks) {
+    const p = Promise.resolve().then(() => taskHandler(item));
+    results.push(p);
+    executing.add(p);
+
+    const clean = () => executing.delete(p);
+    p.then(clean).catch(clean);
+
+    if (executing.size >= concurrency) {
+      await Promise.race(executing);
+    }
+  }
+
+  return Promise.all(results);
 }
 
 async function loadJSON(filePath) {
@@ -89,8 +110,9 @@ async function downloadFavicons() {
   console.log(`📊 Processing top ${targets.length} entries.`);
 
   const results = [];
+  let processedCount = 0;
 
-  for (const entry of targets) {
+  const processEntry = async (entry) => {
     const domain = getDomain(entry.url);
     let faviconUrl = entry.favicon;
 
@@ -118,15 +140,10 @@ async function downloadFavicons() {
         console.log(
           `${colors.grey}  Skipping: Exceeded max retries (${prevEntry.failureCount})${colors.reset}`,
         );
-        results.push({
+        return {
           ...prevEntry,
           status: 'skipped_max_retries',
-        });
-
-        if (results.length % CONFIG.SAVE_BATCH_SIZE === 0) {
-          await saveProgress(inputEntries, results, stateMap, CONFIG.OUTPUT_FILE);
-        }
-        continue;
+        };
       }
 
       if (prevEntry.etag) headers['If-None-Match'] = prevEntry.etag;
@@ -142,12 +159,10 @@ async function downloadFavicons() {
           console.log(
             `${colors.grey}  Skipping: checked within last ${(skipPeriod / 3600000).toFixed(1)}h (${prevEntry.lastCheckTime})${colors.reset}`,
           );
-          results.push({
+          return {
             ...prevEntry,
             status: 'skipped_recent',
-          });
-
-          continue;
+          };
         }
       }
     }
@@ -260,17 +275,39 @@ async function downloadFavicons() {
       metadata.failureCount = (metadata.failureCount || 0) + 1;
     }
 
-    // Merge updates into result object
-    results.push({
+    return {
       ...metadata,
       status,
       error,
+    };
+  };
+
+  const executing = new Set();
+
+  for (const entry of targets) {
+    const p = processEntry(entry).then(async (result) => {
+      results.push(result);
+      processedCount++;
+      if (results.length % CONFIG.SAVE_BATCH_SIZE === 0) {
+        await saveProgress(inputEntries, results, stateMap, CONFIG.OUTPUT_FILE);
+      }
+      return result;
     });
 
-    if (results.length % CONFIG.SAVE_BATCH_SIZE === 0) {
-      await saveProgress(inputEntries, results, stateMap, CONFIG.OUTPUT_FILE);
+    executing.add(p);
+
+    // Clean up when done
+    const clean = () => executing.delete(p);
+    p.then(clean).catch(clean);
+
+    // Limit concurrency
+    if (executing.size >= CONFIG.CONCURRENCY) {
+      await Promise.race(executing);
     }
   }
+
+  // Wait for all remaining tasks
+  await Promise.all(executing);
 
   // 3. Save Results
   await saveProgress(inputEntries, results, stateMap, CONFIG.OUTPUT_FILE);
