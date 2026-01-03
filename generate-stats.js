@@ -4,7 +4,7 @@ import { getIconRelativePath } from './utils.js';
 
 const CONFIG = {
   INPUT_FILE: 'favicons-downloaded.json',
-  OUTPUT_FILE: 'dist/stats.html',
+  OUTPUT_FILE: 'stats.html',
   ICONS_DIR: 'icons',
 };
 
@@ -66,11 +66,7 @@ async function generateStats() {
       }
 
       // File Size from Disk
-      if (
-        status === 'downloaded' ||
-        status === 'not_modified' ||
-        status === 'skipped_recent'
-      ) {
+      if (status === 'downloaded' || status === 'not_modified' || status === 'skipped_recent') {
         try {
           const relativePath = getIconRelativePath(entry.url);
           const filePath = path.join(CONFIG.ICONS_DIR, relativePath);
