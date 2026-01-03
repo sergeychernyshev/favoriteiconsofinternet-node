@@ -130,6 +130,8 @@ async function generateOneTile(
 ) {
   const tileFilename = `tile_${tileIndex}.avif`;
   const tilePath = path.join(CONFIG.TILES_DIR, tileFilename);
+  const domainsJsonFilename = `tile_${tileIndex}.json`;
+  const domainsJsonPath = path.join(CONFIG.TILES_DIR, domainsJsonFilename);
 
   console.log(`\n🎨 Generating Tile #${tileIndex} (${chunk.length} icons)...`);
 
@@ -188,22 +190,39 @@ async function generateOneTile(
           const tileStats = await fs.stat(tilePath);
           const tileMtime = tileStats.mtimeMs;
 
-          // Check if any icon in this chunk is newer than the tile
-          let isStale = false;
-          for (const entry of chunk) {
-            const relativePath = getIconRelativePath(entry.url);
-            const iconMtime = iconMtimes.get(relativePath);
-            if (iconMtime && iconMtime > tileMtime) {
-              isStale = true;
-              break;
+          // Check if JSON exists and content matches
+          let jsonContentChanged = false;
+          try {
+            const existingJson = JSON.parse(await fs.readFile(domainsJsonPath, 'utf-8'));
+            if (JSON.stringify(existingJson) !== JSON.stringify(domains)) {
+              jsonContentChanged = true;
+              console.log(`  🔄 Tile #${tileIndex} content changed (domains mismatch).`);
             }
+          } catch (e) {
+            jsonContentChanged = true;
+            console.log(`  🔄 Tile #${tileIndex} JSON missing or invalid.`);
           }
 
-          if (isStale) {
-            console.log(`  🔄 Tile #${tileIndex} is stale. Regenerating...`);
+          if (jsonContentChanged) {
             shouldGenerate = true;
           } else {
-            console.log(`  ⏭️  Tile #${tileIndex} is up to date. Skipping generation.`);
+            // Check if any icon in this chunk is newer than the tile
+            let isStale = false;
+            for (const entry of chunk) {
+              const relativePath = getIconRelativePath(entry.url);
+              const iconMtime = iconMtimes.get(relativePath);
+              if (iconMtime && iconMtime > tileMtime) {
+                isStale = true;
+                break;
+              }
+            }
+
+            if (isStale) {
+              console.log(`  🔄 Tile #${tileIndex} is stale. Regenerating...`);
+              shouldGenerate = true;
+            } else {
+              console.log(`  ⏭️  Tile #${tileIndex} is up to date. Skipping generation.`);
+            }
           }
         } catch (e) {
           // Tile doesn't exist
@@ -216,8 +235,6 @@ async function generateOneTile(
     }
 
     // Check if JSON exists, if not, force generation of at least JSON
-    const domainsJsonFilename = `tile_${tileIndex}.json`;
-    const domainsJsonPath = path.join(CONFIG.TILES_DIR, domainsJsonFilename);
     let shouldGenerateJson = shouldGenerate;
 
     if (!shouldGenerateJson) {
