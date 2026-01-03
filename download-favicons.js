@@ -3,7 +3,7 @@ import path from 'path';
 import { existsSync } from 'fs';
 import sharp from 'sharp';
 import { sharpsFromIco } from 'sharp-ico';
-import { getDomain, getIconRelativePath } from './utils.js';
+import { getDomain, getIconRelativePath, loadIconMtimes } from './utils.js';
 
 const colors = {
   reset: '\x1b[0m',
@@ -59,10 +59,16 @@ async function runWithConcurrency(tasks, concurrency, taskHandler) {
 async function loadJSON(filePath) {
   try {
     const data = await fs.readFile(filePath, 'utf-8');
-    return JSON.parse(data);
+    const parsed = JSON.parse(data);
+    if (!Array.isArray(parsed)) {
+      console.warn('⚠️ Input file is not an array, defaulting to empty list.');
+      return [];
+    }
+    return parsed;
   } catch (error) {
     if (error.code === 'ENOENT') return null;
-    throw error;
+    console.warn(`⚠️ Failed to read/parse input file: ${error.message}. Defaulting to empty list.`);
+    return [];
   }
 }
 
@@ -93,6 +99,7 @@ async function downloadFavicons() {
 
   // 1. Setup
   await ensureDir(CONFIG.ICONS_DIR);
+  const iconMtimes = await loadIconMtimes(CONFIG.ICONS_DIR);
 
   const inputEntries = await loadJSON(CONFIG.INPUT_FILE);
   if (!inputEntries) {
@@ -101,7 +108,14 @@ async function downloadFavicons() {
   }
 
   // Load previous state if available to get ETags/Last-Modified
-  const previousState = (await loadJSON(CONFIG.OUTPUT_FILE)) || [];
+  let previousState = [];
+  try {
+    previousState = (await loadJSON(CONFIG.OUTPUT_FILE)) || [];
+  } catch (e) {
+    console.warn(`⚠️ Failed to parse previous state file: ${e.message}. Starting fresh.`);
+    previousState = [];
+  }
+
   const stateMap = new Map(previousState.map((e) => [e.url, e]));
 
   // 2. Identify targets
@@ -126,7 +140,7 @@ async function downloadFavicons() {
       }
     }
 
-    const prevEntry = stateMap.get(entry.url);
+    let prevEntry = stateMap.get(entry.url);
 
     console.log(`\nProcessing [Rank ${entry.rank}] ${domain}...`);
 
@@ -134,6 +148,35 @@ async function downloadFavicons() {
     const headers = {
       'User-Agent': CONFIG.USER_AGENT,
     };
+
+    // If no previous state, check if file already exists on disk
+    if (!prevEntry || !prevEntry.lastCheckTime || !prevEntry.downloadTime) {
+      const relativePath = getIconRelativePath(entry.url);
+      const mtimeMs = iconMtimes.get(relativePath);
+
+      if (mtimeMs) {
+        const mtime = new Date(mtimeMs).toISOString();
+
+        if (!prevEntry) {
+          prevEntry = {
+            ...entry,
+            status: 'downloaded',
+            lastCheckTime: mtime,
+            downloadTime: mtime,
+            lastModified: mtime,
+            httpStatus: 200,
+          };
+        } else {
+          prevEntry.lastCheckTime = mtime;
+          prevEntry.downloadTime = mtime;
+          prevEntry.lastModified = mtime;
+          prevEntry.httpStatus = 200;
+        }
+
+        // Update the map so other concurrent tasks (if any for same URL) or saveProgress see it
+        stateMap.set(entry.url, prevEntry);
+      }
+    }
 
     if (prevEntry) {
       if (prevEntry.failureCount && prevEntry.failureCount >= CONFIG.MAX_RETRIES) {

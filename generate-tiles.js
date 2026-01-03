@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import sharp from 'sharp';
 import { Command } from 'commander';
-import { getIconRelativePath, getDomain } from './utils.js';
+import { getIconRelativePath, getDomain, loadIconMtimes } from './utils.js';
 
 const program = new Command();
 
@@ -30,38 +30,6 @@ const CONFIG = {
   EMULATE_MORE_TILES: options.emulate !== 0,
   EMULATE_MORE_TILES_TOTAL_ICONS: options.emulate === true ? 20000 : options.emulate,
 };
-
-async function loadIconMtimes() {
-  console.log(`📂 Loading icon stats from ${CONFIG.ICONS_DIR}...`);
-  const mtimes = new Map();
-
-  async function walk(dir, relativeBase = '') {
-    const files = await fs.readdir(dir, { withFileTypes: true });
-    for (const dirent of files) {
-      const fullPath = path.join(dir, dirent.name);
-      const relativePath = path.join(relativeBase, dirent.name);
-
-      if (dirent.isDirectory()) {
-        await walk(fullPath, relativePath);
-      } else if (dirent.isFile() && dirent.name.endsWith('.png')) {
-        try {
-          const stats = await fs.stat(fullPath);
-          mtimes.set(relativePath, stats.mtimeMs);
-        } catch (e) {
-          // Skip if stat fails
-        }
-      }
-    }
-  }
-
-  try {
-    await walk(CONFIG.ICONS_DIR);
-  } catch (e) {
-    console.error(`❌ Failed to read icons directory: ${e.message}`);
-  }
-  console.log(`✅ Loaded stats for ${mtimes.size} icons.`);
-  return mtimes;
-}
 
 async function ensureDir(dir) {
   try {
@@ -294,25 +262,45 @@ async function generateTiles() {
 
   // 1. Setup
   await ensureDir(CONFIG.TILES_DIR);
-  const iconMtimes = await loadIconMtimes();
+  const iconMtimes = await loadIconMtimes(CONFIG.ICONS_DIR);
 
   // 2. Load Data
   console.log(`📖 Reading ${CONFIG.INPUT_FILE}...`);
-  const rawData = await fs.readFile(CONFIG.INPUT_FILE, 'utf-8');
-  let entries = JSON.parse(rawData);
+  let entries = [];
+  try {
+    const rawData = await fs.readFile(CONFIG.INPUT_FILE, 'utf-8');
+    entries = JSON.parse(rawData);
+    if (!Array.isArray(entries)) {
+      console.warn('⚠️ Input file is not an array, defaulting to empty list.');
+      entries = [];
+    }
+  } catch (e) {
+    console.warn(`⚠️ Failed to read/parse input file: ${e.message}. Defaulting to empty list.`);
+    entries = [];
+  }
 
   // 3. Filter and Sort
   // We only want entries that are successfully downloaded/present locally
   // and we want them sorted by rank.
   const validEntries = entries
-    .filter(
-      (e) =>
+    .filter((e) => {
+      const relativePath = getIconRelativePath(e.url);
+      const mtime = iconMtimes.get(relativePath);
+
+      if (
         (e.status === 'downloaded' ||
           e.status === 'not_modified' ||
           e.status === 'skipped_recent') &&
-        iconMtimes.has(getIconRelativePath(e.url)) &&
-        e.rank, // Ensure rank exists
-    )
+        mtime &&
+        e.rank
+      ) {
+        // Update timestamps if missing, using file mtime
+        if (!e.lastCheckTime) e.lastCheckTime = new Date(mtime).toISOString();
+        if (!e.downloadTime) e.downloadTime = new Date(mtime).toISOString();
+        return true;
+      }
+      return false;
+    })
     .sort((a, b) => a.rank - b.rank);
 
   console.log(`📊 Found ${validEntries.length} valid icons to tile.`);
