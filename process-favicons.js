@@ -10,7 +10,20 @@ const inputFile = path.join(process.cwd(), 'favicons.json');
 const outputFile = path.join(process.cwd(), 'favicons-processed.json');
 const rankedListFile = path.join(process.cwd(), 'domain-lists', 'top10milliondomains.csv');
 const MAX_ENTRIES = 1000000;
+
+const EXCLUDE_PATTERNS = [
+  /\.weebly\.com$/, // Matches *.weebly.com
+];
 // ---------------------
+
+/**
+ * Checks if a domain matches any of the exclusion patterns.
+ * @param {string} domain - The domain to check.
+ * @returns {boolean} True if the domain should be excluded.
+ */
+function isExcluded(domain) {
+  return EXCLUDE_PATTERNS.some((pattern) => pattern.test(domain));
+}
 
 /**
  * Reads the favicons.json file, converts relative favicon paths to absolute URLs,
@@ -76,6 +89,11 @@ async function processAndDeduplicateFavicons() {
 
       // The URL was valid for processing, so it should be valid here.
       const domain = getDomain(entry.url);
+
+      if (isExcluded(domain)) {
+        continue;
+      }
+
       if (!seenDomains.has(domain)) {
         seenDomains.add(domain);
         uniqueEntriesMap.set(domain, entry);
@@ -111,6 +129,7 @@ async function processAndDeduplicateFavicons() {
       const domain = parts[1].replace(/"/g, '').replace(/^www\./, '');
 
       if (domain === 'Domain') continue; // Skip header
+      if (isExcluded(domain)) continue; // Skip excluded domains
 
       if (uniqueEntriesMap.has(domain)) {
         const entry = uniqueEntriesMap.get(domain);
